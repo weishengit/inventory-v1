@@ -15,7 +15,12 @@ class CreatePurchaseOrderDetailsTable extends Migration
     {
         Schema::create('purchase_order_details', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('po_id')->constrained('purchase_orders');
+            $table->foreignId('item_id')->constrained('items');
+            $table->unsignedInteger('quantity');
+            $table->decimal('unit_price');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

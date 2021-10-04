@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateReleaseOrderDetailsTable extends Migration
+class CreateSuppliersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,16 @@ class CreateReleaseOrderDetailsTable extends Migration
      */
     public function up()
     {
-        Schema::create('release_order_details', function (Blueprint $table) {
+        Schema::create('suppliers', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('ro_id')->constrained('release_orders');
-            $table->foreignId('item_id')->constrained('items');
-            $table->unsignedInteger('quantity');
-            $table->decimal('unit_price');
+            $table->string('tin');
+            $table->string('bir');
+            $table->string('vat');
+            $table->string('company_name');
+            $table->string('contact_person');
+            $table->string('address');
+            $table->string('contact');
+            $table->string('email');
             $table->timestamps();
             $table->softDeletes();
         });
@@ -31,6 +35,6 @@ class CreateReleaseOrderDetailsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('release_order_details');
+        Schema::dropIfExists('suppliers');
     }
 }

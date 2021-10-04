@@ -2,11 +2,11 @@
 
 namespace App\Policies;
 
-use App\Models\LogPriority;
+use App\Models\Supplier;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
-class LogPriorityPolicy
+class SupplierPolicy
 {
     use HandlesAuthorization;
 
@@ -25,10 +25,10 @@ class LogPriorityPolicy
      * Determine whether the user can view the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\LogPriority  $logPriority
+     * @param  \App\Models\Supplier  $supplier
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function view(User $user, LogPriority $logPriority)
+    public function view(User $user, Supplier $supplier)
     {
         //
     }
@@ -48,10 +48,10 @@ class LogPriorityPolicy
      * Determine whether the user can update the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\LogPriority  $logPriority
+     * @param  \App\Models\Supplier  $supplier
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function update(User $user, LogPriority $logPriority)
+    public function update(User $user, Supplier $supplier)
     {
         //
     }
@@ -60,10 +60,10 @@ class LogPriorityPolicy
      * Determine whether the user can delete the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\LogPriority  $logPriority
+     * @param  \App\Models\Supplier  $supplier
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function delete(User $user, LogPriority $logPriority)
+    public function delete(User $user, Supplier $supplier)
     {
         //
     }
@@ -72,10 +72,10 @@ class LogPriorityPolicy
      * Determine whether the user can restore the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\LogPriority  $logPriority
+     * @param  \App\Models\Supplier  $supplier
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function restore(User $user, LogPriority $logPriority)
+    public function restore(User $user, Supplier $supplier)
     {
         //
     }
@@ -84,10 +84,10 @@ class LogPriorityPolicy
      * Determine whether the user can permanently delete the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\LogPriority  $logPriority
+     * @param  \App\Models\Supplier  $supplier
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function forceDelete(User $user, LogPriority $logPriority)
+    public function forceDelete(User $user, Supplier $supplier)
     {
         //
     }

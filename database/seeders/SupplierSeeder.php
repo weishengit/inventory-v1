@@ -2,9 +2,10 @@
 
 namespace Database\Seeders;
 
+use App\Models\Supplier;
 use Illuminate\Database\Seeder;
 
-class ReleaseOrderReceiptSeeder extends Seeder
+class SupplierSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -13,6 +14,6 @@ class ReleaseOrderReceiptSeeder extends Seeder
      */
     public function run()
     {
-        //
+        Supplier::factory(10)->create();
     }
 }

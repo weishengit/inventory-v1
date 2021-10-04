@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\ReleaseOrderReceiptDetail;
+use App\Models\Status;
 use Illuminate\Http\Request;
 
-class ReleaseOrderReceiptDetailController extends Controller
+class StatusController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -41,10 +41,10 @@ class ReleaseOrderReceiptDetailController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\ReleaseOrderReceiptDetail  $releaseOrderReceiptDetail
+     * @param  \App\Models\Status  $status
      * @return \Illuminate\Http\Response
      */
-    public function show(ReleaseOrderReceiptDetail $releaseOrderReceiptDetail)
+    public function show(Status $status)
     {
         //
     }
@@ -52,10 +52,10 @@ class ReleaseOrderReceiptDetailController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\ReleaseOrderReceiptDetail  $releaseOrderReceiptDetail
+     * @param  \App\Models\Status  $status
      * @return \Illuminate\Http\Response
      */
-    public function edit(ReleaseOrderReceiptDetail $releaseOrderReceiptDetail)
+    public function edit(Status $status)
     {
         //
     }
@@ -64,10 +64,10 @@ class ReleaseOrderReceiptDetailController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\ReleaseOrderReceiptDetail  $releaseOrderReceiptDetail
+     * @param  \App\Models\Status  $status
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, ReleaseOrderReceiptDetail $releaseOrderReceiptDetail)
+    public function update(Request $request, Status $status)
     {
         //
     }
@@ -75,10 +75,10 @@ class ReleaseOrderReceiptDetailController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\ReleaseOrderReceiptDetail  $releaseOrderReceiptDetail
+     * @param  \App\Models\Status  $status
      * @return \Illuminate\Http\Response
      */
-    public function destroy(ReleaseOrderReceiptDetail $releaseOrderReceiptDetail)
+    public function destroy(Status $status)
     {
         //
     }

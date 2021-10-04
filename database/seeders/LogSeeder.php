@@ -13,6 +13,6 @@ class LogSeeder extends Seeder
      */
     public function run()
     {
-        //
+
     }
 }

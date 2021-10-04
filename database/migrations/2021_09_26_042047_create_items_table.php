@@ -15,7 +15,15 @@ class CreateItemsTable extends Migration
     {
         Schema::create('items', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('supplier_id')->constrained('suppliers');
+            $table->foreignId('type_id')->constrained('types');
+            $table->string('sku')->unique();
+            $table->string('name');
+            $table->string('unit_price');
+            $table->string('quantity');
+            $table->string('critical_level');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

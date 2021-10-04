@@ -15,7 +15,15 @@ class CreatePurchaseOrdersTable extends Migration
     {
         Schema::create('purchase_orders', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('supplier_id')->constrained('suppliers');
+            $table->foreignId('created_by')->constrained('users');
+            $table->foreignId('approved_by')->constrained('users')->nullable();
+            $table->foreignId('received_by')->constrained('users')->nullable();
+            $table->foreignId('status_id')->constrained('statuses')->nullable();
+            $table->string('po_num');
+            $table->string('memo');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

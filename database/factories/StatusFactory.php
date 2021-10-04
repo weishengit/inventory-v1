@@ -2,17 +2,17 @@
 
 namespace Database\Factories;
 
-use App\Models\PurchaseOrderReceipt;
+use App\Models\Status;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class PurchaseOrderReceiptFactory extends Factory
+class StatusFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.
      *
      * @var string
      */
-    protected $model = PurchaseOrderReceipt::class;
+    protected $model = Status::class;
 
     /**
      * Define the model's default state.

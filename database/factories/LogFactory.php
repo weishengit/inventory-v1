@@ -22,7 +22,9 @@ class LogFactory extends Factory
     public function definition()
     {
         return [
-            //
+            'type' => 'Test',
+            'user' => 1,
+            'info' => 'Test Log ' . $this->faker->numberBetween(100, 999)
         ];
     }
 }
