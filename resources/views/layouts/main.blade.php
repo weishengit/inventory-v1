@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>{{ config('app.name', 'Inventory System') . ' | ' . ucfirst(request()->path()) }}</title>
+    <title>{{ ucfirst(request()->path())  . ' | ' . config('app.name', 'Inventory System') }}</title>
 
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet"
@@ -17,7 +17,7 @@
     @yield('styles')
 </head>
 
-<body class="hold-transition sidebar-mini">
+<body class="hold-transition sidebar-mini layout-fixed">
     <div class="wrapper">
 
         @include('layouts.nav')

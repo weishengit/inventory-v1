@@ -25,6 +25,7 @@
     <div class="content">
         <div class="container-fluid">
             <div class="row">
+                @can('admin')
                 <div class="col-md-3 col-sm-6 col-12">
                     <div class="info-box">
                         <span class="info-box-icon bg-info"><i class="far fa-envelope"></i></span>
@@ -38,6 +39,8 @@
                     <!-- /.info-box -->
                 </div>
                 <!-- /.col -->
+                @endcan
+
                 <div class="col-md-3 col-sm-6 col-12">
                     <div class="info-box">
                         <span class="info-box-icon bg-success"><i class="far fa-flag"></i></span>

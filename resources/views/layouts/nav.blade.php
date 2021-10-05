@@ -8,6 +8,7 @@
         @if (session()->has('message'))
             <div class="brand-text font-weight-light pt-2 bg-warning">
                 <span class="p-4">
+                <i class="fas fa-info"></i>
                 {{ session()->get('message') }}
                 </span>
             </div>

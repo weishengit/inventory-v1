@@ -1,5 +1,5 @@
 <!-- Main Sidebar Container -->
-<aside class="main-sidebar sidebar-dark-primary elevation-4">
+<aside class="main-sidebar main-sidebar-custom sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
     <a href="index3.html" class="brand-link">
         <img src="dist/img/InvLogo.png" alt="Inventory Logo" class="brand-image img-circle elevation-3"
@@ -28,31 +28,43 @@
         <nav class="mt-2">
             <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
                 data-accordion="false">
+                {{-- Info --}}
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon far fa-newspaper"></i>
+                        <p>
+                            What's New?
+                            <span class="right badge badge-danger">New</span>
+                        </p>
+                    </a>
+                </li>
+
+                {{-- ADMIN --}}
                 @can('admin')
                 <li class="nav-item menu-closed">
                     <a href="#" class="nav-link">
-                        <i class="nav-icon fas fa-tachometer-alt"></i>
+                        <i class="nav-icon fas fa-user-tie"></i>
                         <p>
-                            Admin Pages
+                            Admin
                             <i class="right fas fa-angle-left"></i>
                         </p>
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
                             <a href="#" class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
+                                <i class="far fa-user nav-icon"></i>
                                 <p>Accounts</p>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a href="#" class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
+                                <i class="fas fa-truck nav-icon"></i>
                                 <p>Suppliers</p>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a href="#" class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
+                                <i class="fas fa-file-invoice nav-icon"></i>
                                 <p>Approval</p>
                             </a>
                         </li>
@@ -62,7 +74,7 @@
 
                 <li class="nav-item menu-closed">
                     <a href="#" class="nav-link">
-                        <i class="nav-icon fas fa-tachometer-alt"></i>
+                        <i class="nav-icon fas fa-warehouse"></i>
                         <p>
                             Manage Inventory
                             <i class="right fas fa-angle-left"></i>
@@ -71,51 +83,78 @@
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
                             <a href="#" class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Inventory Movement</p>
+                                <i class="fas fa-box nav-icon"></i>
+                                <p>View Items</p>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a href="#" class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
+                                <i class="fas fa-boxes nav-icon"></i>
                                 <p>View Inventory</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">
+                                <i class="fas fa-plus nav-icon"></i>
+                                <p>Create Purchase Order</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">
+                                <i class="fas fa-minus nav-icon"></i>
+                                <p>Create Release Order</p>
                             </a>
                         </li>
                     </ul>
                 </li>
 
                 {{-- STATS --}}
-                <li class="nav-item">
+                <li class="nav-item menu-closed">
                     <a href="#" class="nav-link">
-                        <i class="nav-icon fas fa-th"></i>
+                        <i class="nav-icon fas fa-chart-bar"></i>
                         <p>
-                            Statistics
+                            Inventory Statistics
+                            <i class="right fas fa-angle-left"></i>
                         </p>
                     </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">
+                                <i class="fas fa-dolly-flatbed nav-icon"></i>
+                                <p>Inventory Movement</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">
+                                <i class="fas fa-chart-pie nav-icon"></i>
+                                <p>Item Statistics</p>
+                            </a>
+                        </li>
+                    </ul>
                 </li>
 
                 {{-- LOGS --}}
                 <li class="nav-item">
                     <a href="#" class="nav-link">
-                        <i class="nav-icon fas fa-th"></i>
+                        <i class="nav-icon fas fa-book"></i>
                         <p>
                             Logs
-                        </p>
-                    </a>
-                </li>
-                {{-- LOG OUT --}}
-                <li class="nav-item">
-                    <a href="#" class="nav-link bg-danger">
-                        <i class="nav-icon fas fa-th"></i>
-                        <p>
-                            Log Out
-                            {{-- <span class="right badge badge-danger">New</span> --}}
                         </p>
                     </a>
                 </li>
             </ul>
         </nav>
         <!-- /.sidebar-menu -->
+    </div>
+
+    <div class="sidebar-custom">
+        <form action="{{ route('logout') }}" method="POST">
+        @csrf
+            <button class="btn btn-block btn-danger " type="submit">
+                <i class="nav-icon fas fa-book"></i>
+                Logout
+            </button>
+        </form>
     </div>
     <!-- /.sidebar -->
 </aside>
