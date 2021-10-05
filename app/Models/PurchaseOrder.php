@@ -27,26 +27,26 @@ class PurchaseOrder extends Model
 
     public function status()
     {
-        return $this->belongsTo(Status::class)->get()->status;
+        return $this->belongsTo(Status::class)->select(['status']);
     }
 
     public function supplier()
     {
-        return $this->belongsTo(Supplier::class)->get()->status;
+        return $this->belongsTo(Supplier::class);
     }
 
     public function created_by()
     {
-        return $this->belongsTo(User::class)->where('id', $this->created_by)->get()->name;
+        return $this->belongsTo(User::class, 'created_by')->select(['name']);
     }
 
     public function approved_by()
     {
-        return $this->belongsTo(User::class)->where('id', $this->approved_by)->get()->name;
+        return $this->belongsTo(User::class, 'approved_by')->select(['name']);
     }
 
     public function received_by()
     {
-        return $this->belongsTo(User::class)->where('id', $this->received_by)->get()->name;
+        return $this->belongsTo(User::class, 'received_by')->select(['name']);
     }
 }

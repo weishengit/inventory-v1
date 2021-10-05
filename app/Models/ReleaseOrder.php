@@ -37,16 +37,16 @@ class ReleaseOrder extends Model
 
     public function created_by()
     {
-        return $this->belongsTo(User::class)->select(['name'])->where('id', $this->created_by);
+        return $this->belongsTo(User::class, 'created_by')->select(['name']);
     }
 
     public function approved_by()
     {
-        return $this->belongsTo(User::class)->select(['name'])->where('id', $this->approved_by);
+        return $this->belongsTo(User::class, 'approved_by')->select(['name']);
     }
 
     public function released_by()
     {
-        return $this->belongsTo(User::class)->select(['name'])->where('id', $this->released_by);
+        return $this->belongsTo(User::class, 'released_by')->select(['name']);
     }
 }

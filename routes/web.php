@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,7 +15,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 
-Auth::routes(['register => false']);
+Auth::routes();
 
 Route::redirect('/', '/home', 302);
 
