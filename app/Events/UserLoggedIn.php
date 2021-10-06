@@ -11,7 +11,7 @@ use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 
-class UserLoggedIn
+class UserLoggedIn implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
@@ -33,6 +33,6 @@ class UserLoggedIn
      */
     public function broadcastOn()
     {
-        return new PrivateChannel('channel-name');
+        return new Channel('alert-notification');
     }
 }
