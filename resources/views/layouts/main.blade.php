@@ -5,7 +5,17 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>{{ ucfirst(request()->path())  . ' | ' . config('app.name', 'Inventory System') }}</title>
+    <title>
+        @if (strpos(request()->path(), '/') > 0)
+            {{ substr(ucfirst(request()->path()), 0, strpos(request()->path(), '/')) }}
+        @else
+            {{ ucfirst(request()->path()); }}
+        @endif
+        |
+        {{
+            config('app.name', 'Inventory System')
+        }}
+    </title>
 
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet"
@@ -24,7 +34,6 @@
         @include('layouts.nav')
 
         @include('layouts.sidebar')
-
 
         @yield('content')
 

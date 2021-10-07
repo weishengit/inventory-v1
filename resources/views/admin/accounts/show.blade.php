@@ -7,12 +7,13 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>Profile</h1>
+                    <h1>User Log</h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
-                        <li class="breadcrumb-item active">User Profile</li>
+                        <li class="breadcrumb-item"><a href="{{ route('accounts.index') }}">Accounts</a></li>
+                        <li class="breadcrumb-item active">User Log</li>
                     </ol>
                 </div>
             </div>
@@ -55,12 +56,12 @@
                                 <li class="list-group-item">
                                     <b>Last Login</b>
                                     <a class="float-right">
-                                        {{ $user->logs()->select('created_at')->where('type', 'Login')->orderBy('id', 'DESC')->first()->created_at->toDayDateTimeString() }}
+                                        {{ $last_login ?? 'N/A' }}
                                     </a>
                                 </li>
                             </ul>
 
-                            @if ($user->delete_at == null)
+                            @if ($user->deleted_at == null)
                             <a class="btn btn-primary btn-block"><b>Active</b></a>
                             @else
                             <a class="btn btn-danger btn-block"><b>Inactive</b></a>
@@ -111,7 +112,7 @@
                                                 </div>
                                             </div>
                                             @empty
-                                                <h4>Could Not Load Logs</h4>
+                                                <h4 class="text-center p-4">Could Not Load Logs</h4>
                                             @endforelse
 
                                             <div>

@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Log;
 use App\Models\User;
 use Illuminate\Http\Request;
+use App\Events\UserDeleteEvent;
+use App\Events\UserRestoreEvent;
 
 class AccountController extends Controller
 {
@@ -18,9 +20,10 @@ class AccountController extends Controller
         $this->authorize('superadmin');
 
         if (isset($request->search)) {
-            $keyword = $request->validate([
+            $request->validate([
                 'search' => 'required', 'string', 'max:250'
             ]);
+            $keyword = $request->search;
             $accounts = User::with(['role'])->withTrashed()->where(function ($query) use ($keyword) {
                 $query->where('email', 'like', '%' . $keyword . '%')->orWhere('name', 'like', '%' . $keyword . '%');
             })
@@ -61,15 +64,23 @@ class AccountController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(User $account)
+    public function show($id)
     {
         $this->authorize('admin');
 
-        $logs = Log::where('user_id', $account->id)->orderBy('id', 'DESC')->paginate(5);
+        $user = User::withTrashed()->findOrFail($id);
+
+        $logs = Log::where('user_id', $id)->orderBy('id', 'DESC')->paginate(5);
+
+        if ($last_login = Log::where('user_id', $id)->where('type', 'Login')->orderBy('id', 'DESC')->first()) {
+            $last_login = $last_login->created_at->toDayDateTimeString();
+        }
+
 
         return view('admin.accounts.show', [
-            'user' => $account,
-            'logs' => $logs
+            'user' => $user,
+            'logs' => $logs,
+            'last_login' => $last_login
         ]);
     }
 
@@ -95,7 +106,8 @@ class AccountController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->authorize('superadmin');
+
     }
 
     /**
@@ -107,6 +119,23 @@ class AccountController extends Controller
     public function destroy(User $account)
     {
         $this->authorize('superadmin');
-        dd('Deleted');
+
+        event(new UserDeleteEvent($account, auth()->user()));
+
+        $account->delete();
+
+        return redirect()->route('accounts.index')->with('message', "$account->name is now disabled" );
+    }
+
+    public function restore(Request $request)
+    {
+        $this->authorize('superadmin');
+
+        $account = User::withTrashed()->findOrFail($request->account);
+        $account->restore();
+
+        event(new UserRestoreEvent($account, auth()->user()));
+
+        return redirect()->route('accounts.index')->with('message', "$account->name is now active" );
     }
 }

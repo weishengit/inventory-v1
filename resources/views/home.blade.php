@@ -25,13 +25,12 @@
     <div class="content">
         <div class="container-fluid">
             <div class="row">
-                @can('admin')
                 <div class="col-md-3 col-sm-6 col-12">
                     <div class="info-box">
-                        <span class="info-box-icon bg-info"><i class="far fa-envelope"></i></span>
+                        <span class="info-box-icon bg-info"><i class="fas fa-cubes"></i></span>
 
                         <div class="info-box-content">
-                            <span class="info-box-text">Pending Request</span>
+                            <span class="info-box-text">Total Stock</span>
                             <span class="info-box-number">0</span>
                         </div>
                         <!-- /.info-box-content -->
@@ -39,14 +38,13 @@
                     <!-- /.info-box -->
                 </div>
                 <!-- /.col -->
-                @endcan
 
                 <div class="col-md-3 col-sm-6 col-12">
                     <div class="info-box">
-                        <span class="info-box-icon bg-success"><i class="far fa-flag"></i></span>
+                        <span class="info-box-icon bg-success"><i class="fas fa-dolly-flatbed"></i></span>
 
                         <div class="info-box-content">
-                            <span class="info-box-text">Added Today</span>
+                            <span class="info-box-text">Ordered Today</span>
                             <span class="info-box-number">0</span>
                         </div>
                         <!-- /.info-box-content -->
@@ -56,7 +54,7 @@
                 <!-- /.col -->
                 <div class="col-md-3 col-sm-6 col-12">
                     <div class="info-box">
-                        <span class="info-box-icon bg-warning"><i class="far fa-copy"></i></span>
+                        <span class="info-box-icon bg-warning"><i class="fas fa-shipping-fast"></i></span>
 
                         <div class="info-box-content">
                             <span class="info-box-text">Released Today</span>
@@ -69,7 +67,7 @@
                 <!-- /.col -->
                 <div class="col-md-3 col-sm-6 col-12">
                     <div class="info-box">
-                        <span class="info-box-icon bg-danger"><i class="far fa-star"></i></span>
+                        <span class="info-box-icon bg-danger"><i class="fas fa-ruler-vertical"></i></span>
 
                         <div class="info-box-content">
                             <span class="info-box-text">Critial Level</span>

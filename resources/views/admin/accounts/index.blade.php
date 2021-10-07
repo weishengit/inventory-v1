@@ -25,10 +25,24 @@
     <div class="content">
         <div class="container-fluid">
             <div class="row">
-                <div class="col-md-12">
+                <div class="col-12">
                     <div class="card">
                         <div class="card-header">
                             <h3 class="card-title">Users Table</h3>
+                            <div class="card-tools">
+                                <form action="{{ route('accounts.index') }}">
+                                <div class="input-group input-group-sm" style="width: 150px;">
+                                    <input type="text" name="search" class="form-control float-right"
+                                        placeholder="Search">
+
+                                    <div class="input-group-append">
+                                        <button type="submit" class="btn btn-default">
+                                            <i class="fas fa-search"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                                </form>
+                            </div>
                         </div>
                         <!-- /.card-header -->
                         <div class="card-body">
@@ -52,16 +66,15 @@
                                         <td>{{ $account->role->name }}</td>
                                         <td>{{ $account->created_at->toDayDateTimeString() }}</td>
                                         <td class="d-flex p-2 justify-content-end">
-                                            <a class="btn btn-info btn-sm" href="{{ route('accounts.show', ['account' => $account]) }}">
+                                            <a class="btn btn-info btn-sm"
+                                                href="{{ route('accounts.show', ['account' => $account]) }}">
                                                 <i class="fas fa-file">
                                                 </i>
                                                 View
                                             </a>
                                             @if (auth()->user()->id == 1)
-                                                @if ($account->delete_at == null)
-                                                <form
-                                                    class="px-1"
-                                                    method="POST"
+                                                @if ($account->deleted_at == null)
+                                                <form class="px-1" method="POST"
                                                     action="{{ route('accounts.destroy', ['account' => $account]) }}">
                                                     @csrf
                                                     @method('DELETE')
@@ -72,16 +85,14 @@
                                                     </button>
                                                 </form>
                                                 @else
-                                                <form
-                                                    class="px-1"
-                                                    method="POST"
-                                                    action="{{ route('accounts.restore', ['account' => $account]) }}">
+                                                <form class="px-1" method="POST"
+                                                    action="{{ route('accounts.restore', ['account' => $account->id]) }}">
                                                     @csrf
                                                     @method('PUT')
-                                                    <button class="btn btn-success btn-sm" href="{{ route('accounts.restore', ['account' => $account]) }}">
+                                                    <button class="btn btn-success btn-sm" type="submit">
                                                         <i class="fas fa-check">
                                                         </i>
-                                                        Activate
+                                                        Reactivate
                                                     </button>
                                                 </form>
                                                 @endif
@@ -89,7 +100,7 @@
                                         </td>
                                     </tr>
                                     @empty
-                                        <h4>Could Not Load Accounts</h4>
+                                    <tr><th colspan="6" class="text-center">Could Not Load Accounts</th></tr>
                                     @endforelse
                                 </tbody>
                             </table>
