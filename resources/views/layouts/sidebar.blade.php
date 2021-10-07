@@ -1,8 +1,8 @@
 <!-- Main Sidebar Container -->
 <aside class="main-sidebar main-sidebar-custom sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
-    <a href="index3.html" class="brand-link">
-        <img src="dist/img/InvLogo.png" alt="Inventory Logo" class="brand-image img-circle elevation-3"
+    <a href="{{ route('home') }}" class="brand-link">
+        <img src="{{ asset('dist/img/InvLogo.png') }}" alt="Inventory Logo" class="brand-image img-circle elevation-3"
             style="opacity: .8">
         <span class="brand-text font-weight-light">{{ config('app.name', 'Inventory System') }}</span>
     </a>
@@ -51,7 +51,7 @@
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="#" class="nav-link">
+                            <a href="{{ route('accounts.index') }}" class="nav-link">
                                 <i class="far fa-user nav-icon"></i>
                                 <p>Accounts</p>
                             </a>

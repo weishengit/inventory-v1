@@ -92,7 +92,7 @@
 @section('scripts')
 
 <!-- Toastr -->
-<script src="plugins/sweetalert2/sweetalert2.min.js"></script>
+<script src="{{ asset('plugins/sweetalert2/sweetalert2.min.js') }}"></script>
 <script src="{{ asset('js/app.js') }}"></script>
 
 <script>
@@ -126,5 +126,5 @@ Echo.channel(`alert-notification`)
 
 @section('styles')
 <!-- SweetAlert2 -->
-<link rel="stylesheet" href="plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css">
+<link rel="stylesheet" href="{{ asset('plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css') }}">
 @endsection
