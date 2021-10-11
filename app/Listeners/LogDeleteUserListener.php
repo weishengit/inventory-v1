@@ -6,6 +6,7 @@ use App\Models\Log;
 use App\Events\UserDeleteEvent;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Support\Facades\Log as FacadesLog;
 
 class LogDeleteUserListener
 {
@@ -27,6 +28,12 @@ class LogDeleteUserListener
      */
     public function handle(UserDeleteEvent $event)
     {
+        FacadesLog::channel('daily')
+        ->info("User[".$event->user->id."] Disabled By User[".$event->admin->id."]", [
+            'user' => $event->user,
+            'admin' => $event->admin
+        ]);
+
         Log::create([
             'user_id' => $event->user->id,
             'type' => 'Account',

@@ -88,11 +88,6 @@
 @endsection
 
 @section('scripts')
-
-<!-- Toastr -->
-<script src="{{ asset('plugins/sweetalert2/sweetalert2.min.js') }}"></script>
-<script src="{{ asset('js/app.js') }}"></script>
-
 <script>
 const Toast = Swal.mixin({
     toast: true,
@@ -120,9 +115,4 @@ Echo.channel(`alert-notification`)
         })
     });
 </script>
-@endsection
-
-@section('styles')
-<!-- SweetAlert2 -->
-<link rel="stylesheet" href="{{ asset('plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css') }}">
 @endsection

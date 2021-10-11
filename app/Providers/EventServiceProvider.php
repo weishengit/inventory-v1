@@ -3,6 +3,8 @@
 namespace App\Providers;
 
 use App\Events\UserLoggedIn;
+use App\Events\UserEditEvent;
+use App\Listeners\LogUserEdit;
 use App\Events\UserDeleteEvent;
 use App\Listeners\LogUserLogin;
 use App\Events\UserRestoreEvent;
@@ -31,6 +33,9 @@ class EventServiceProvider extends ServiceProvider
         ],
         UserLoggedOutEvent::class => [
             LogUserLogoutListener::class
+        ],
+        UserEditEvent::class => [
+            LogUserEdit::class
         ],
         UserDeleteEvent::class => [
             LogDeleteUserListener::class

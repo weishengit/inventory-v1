@@ -3,10 +3,18 @@
 namespace App\Http\Controllers;
 
 use App\Models\Log;
+use App\Models\Role;
 use App\Models\User;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use App\Events\UserEditEvent;
 use App\Events\UserDeleteEvent;
 use App\Events\UserRestoreEvent;
+use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log as FacadesLog;
+use App\Http\Requests\Accounts\StoreAccountRequest;
+use App\Http\Requests\Accounts\UpdateAccountRequest;
 
 class AccountController extends Controller
 {
@@ -17,7 +25,10 @@ class AccountController extends Controller
      */
     public function index(Request $request)
     {
-        $this->authorize('superadmin');
+        if (!Gate::allows('admin')) {
+            FacadesLog::channel('dailysuspicious')->alert('User['.auth()->user()->id.'] Tried To Enter Page [Account.Index] Without Proper Authorization');
+            abort(403);
+        }
 
         if (isset($request->search)) {
             $request->validate([
@@ -44,7 +55,16 @@ class AccountController extends Controller
      */
     public function create()
     {
-        //
+        if (!Gate::allows('superadmin')) {
+            FacadesLog::channel('dailysuspicious')->alert('User['.auth()->user()->id.'] Tried To Enter Page [Account.Create] Without Proper Authorization');
+            abort(403);
+        }
+
+        $roles = Role::all();
+
+        return view('admin.accounts.create', [
+            'roles' => $roles
+        ]);
     }
 
     /**
@@ -53,9 +73,39 @@ class AccountController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreAccountRequest $request)
     {
-        //
+        if (!Gate::allows('superadmin')) {
+            FacadesLog::channel('dailysuspicious')->alert('User['.auth()->user()->id.'] Tried To Enter Page [Account.Store] Without Proper Authorization', ['user' => $request->validated()]);
+            abort(403);
+        }
+
+        try {
+            $user = User::create([
+                'email' => $request->email,
+                'name' => $request->name,
+                'password' => Hash::make($request->password),
+                'role_id' => $request->role_id,
+                'avatar' => ''
+            ]);
+
+            $path = $request->file('avatar')->storeAs(
+                'avatars',
+                $user->id . '-avatar.'. $request->file('avatar')->extension(),
+                'public'
+            );
+
+            $user->avatar = $path;
+            $user->save();
+        } catch (\Throwable $th) {
+            FacadesLog::channel('dailyerror')->alert('Error : User['.auth()->user()->id.'] Encountered An Error To [Update Account]', [
+                'error' => $th->getMessage()
+            ]);
+            return redirect()->route('accounts.index')->with('message', "$user->name was not created.");
+        }
+
+
+        return redirect()->route('accounts.index')->with('message', "$user->name has been created.");
     }
 
     /**
@@ -66,7 +116,10 @@ class AccountController extends Controller
      */
     public function show($id)
     {
-        $this->authorize('admin');
+        if (!Gate::allows('admin')) {
+            FacadesLog::channel('dailysuspicious')->alert('User['.auth()->user()->id.'] Tried To Enter Page [Account.Show] User['.$id.'] Without Proper Authorization');
+            abort(403);
+        }
 
         $user = User::withTrashed()->findOrFail($id);
 
@@ -92,9 +145,17 @@ class AccountController extends Controller
      */
     public function edit(User $account)
     {
-        $this->authorize('superadmin');
-        dd('edited');
+        if (!Gate::allows('superadmin')) {
+            FacadesLog::channel('dailysuspicious')->alert('User['.auth()->user()->id.'] Tried To Enter Page [Account.Edit] User['.$account->id.'] Without Proper Authorization');
+            abort(403);
+        }
 
+        $roles = Role::all();
+
+        return view('admin.accounts.edit', [
+            'user' => $account,
+            'roles' => $roles
+        ]);
     }
 
     /**
@@ -104,10 +165,43 @@ class AccountController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateAccountRequest $request, User $account)
     {
-        $this->authorize('superadmin');
+        if (!Gate::allows('superadmin')) {
+            FacadesLog::channel('dailysuspicious')->alert('User['.auth()->user()->id.'] Tried To Enter Page [Account.Update] User['.$account->id.'] Without Proper Authorization');
+            abort(403);
+        }
 
+        $values = $request->validated();
+        try {
+            // Check If Password Changed
+            if ($values['password'] == null) {
+                unset($values['password']);
+            }
+
+            // Check If Avatar Changed
+            if ($request->hasFile('avatar')) {
+                $path = $request->file('avatar')->storeAs(
+                    'avatars',
+                    $account->id . '-avatar.'. $request->file('avatar')->extension(),
+                    'public'
+                );
+
+                $values['avatar'] = $path;
+            }
+
+            $account->update($values);
+            event(new UserEditEvent(auth()->user(), $account->getOriginal(), $account));
+
+        } catch (\Throwable $th) {
+            FacadesLog::channel('dailyerror')->alert('Error : User['.auth()->user()->id.'] Encountered An Error To [Update Account]', [
+                'error' => $th->getMessage()
+            ]);
+
+            return redirect()->route('accounts.index')->with('message', "$account->name could not be updated.");
+        }
+
+        return redirect()->route('accounts.index')->with('message', "$account->name has been updated.");
     }
 
     /**
@@ -118,23 +212,41 @@ class AccountController extends Controller
      */
     public function destroy(User $account)
     {
-        $this->authorize('superadmin');
+        if (!Gate::allows('superadmin')) {
+            FacadesLog::channel('dailysuspicious')->alert('User['.auth()->user()->id.'] Tried To Enter Page [Account.Destroy] User['.$account->id.'] Without Proper Authorization');
+            abort(403);
+        }
 
-        event(new UserDeleteEvent($account, auth()->user()));
-
-        $account->delete();
+        try {
+            $account->delete();
+            event(new UserDeleteEvent($account, auth()->user()));
+        } catch (\Throwable $th) {
+            FacadesLog::channel('dailyerror')->alert('Error : User['.auth()->user()->id.'] Encountered An Error To [Update Account]', [
+                'error' => $th->getMessage()
+            ]);
+            return redirect()->route('accounts.index')->with('message', "$account->name could not be disabled" );
+        }
 
         return redirect()->route('accounts.index')->with('message', "$account->name is now disabled" );
     }
 
     public function restore(Request $request)
     {
-        $this->authorize('superadmin');
+        if (!Gate::allows('superadmin')) {
+            FacadesLog::channel('dailysuspicious')->alert('User['.auth()->user()->id.'] Tried To Enter Page [Account.Restore] User['.$request->account.'] Without Proper Authorization');
+            abort(403);
+        }
 
-        $account = User::withTrashed()->findOrFail($request->account);
-        $account->restore();
-
-        event(new UserRestoreEvent($account, auth()->user()));
+        try {
+            $account = User::withTrashed()->where('deleted_at', '!=', null)->findOrFail($request->account);
+            $account->restore();
+            event(new UserRestoreEvent($account, auth()->user()));
+        } catch (\Throwable $th) {
+            FacadesLog::channel('dailyerror')->alert('Error : User['.auth()->user()->id.'] Encountered An Error To [Update Account]', [
+                'error' => $th->getMessage()
+            ]);
+            return redirect()->route('accounts.index')->with('message', "Error: Could Not Find Account" );
+        }
 
         return redirect()->route('accounts.index')->with('message', "$account->name is now active" );
     }

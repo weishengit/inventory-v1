@@ -49,9 +49,23 @@ return [
 
         'daily' => [
             'driver' => 'daily',
-            'path' => storage_path('logs/laravel.log'),
+            'path' => storage_path('logs/daily/activity/activity.log'),
             'level' => env('LOG_LEVEL', 'debug'),
-            'days' => 14,
+            'days' => 0,
+        ],
+
+        'dailyerror' => [
+            'driver' => 'daily',
+            'path' => storage_path('logs/daily/error/error.log'),
+            'level' => env('LOG_LEVEL', 'debug'),
+            'days' => 0,
+        ],
+
+        'dailysuspicious' => [
+            'driver' => 'daily',
+            'path' => storage_path('logs/daily/suspicious/suspicious.log'),
+            'level' => env('LOG_LEVEL', 'debug'),
+            'days' => 0,
         ],
 
         'slack' => [
@@ -100,6 +114,7 @@ return [
         'emergency' => [
             'path' => storage_path('logs/laravel.log'),
         ],
+
     ],
 
 ];

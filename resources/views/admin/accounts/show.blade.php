@@ -14,6 +14,7 @@
                         <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
                         <li class="breadcrumb-item"><a href="{{ route('accounts.index') }}">Accounts</a></li>
                         <li class="breadcrumb-item active">User Log</li>
+
                     </ol>
                 </div>
             </div>
@@ -30,9 +31,14 @@
                     <!-- Profile Image -->
                     <div class="card card-primary card-outline">
                         <div class="card-body box-profile">
+
                             <div class="text-center">
                                 @if(isset($user->avatar))
-                                <img src="{{ asset('img/avatar/' . $user->avatar) }}"
+                                <img src="{{ asset('storage/'. $user->avatar) }}"
+                                    style="object-fit: contain;
+                                    object-position: center;
+                                    max-height: 100px;
+                                    margin-bottom: 1rem;"
                                     class="profile-user-img img-fluid img-circle" alt="User Image">
                                 @else
                                 <img src="{{ asset('dist/img/default-150x150.png') }}"
@@ -66,6 +72,8 @@
                             @else
                             <a class="btn btn-danger btn-block"><b>Inactive</b></a>
                             @endif
+
+
                         </div>
                         <!-- /.card-body -->
                     </div>
@@ -77,10 +85,14 @@
                         <div class="card-header p-2 d-flex">
                             <ul class="nav nav-pills">
                                 <li class="nav-item">
-                                    <a class="nav-link active" href="#activity" data-toggle="tab">Latest Activity
+                                @can('superadmin')
+                                    <a class="nav-link bg-warning mx-1" href="{{ route('accounts.edit', ['account' => $user]) }}"><b>Edit Account</b></a>
+                                @endcan
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link active mx-1" href="#activity" data-toggle="tab">Latest Activity
                                     </a>
                                 </li>
-
                             </ul>
                             <div class="ml-auto px-2">
                                 {{ $logs->links() }}

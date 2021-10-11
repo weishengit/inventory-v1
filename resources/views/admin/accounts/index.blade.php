@@ -28,11 +28,22 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
-                            <h3 class="card-title">Users Table</h3>
+                            <h3 class="card-title">
+                                @can('superadmin')
+                                <a href="{{ route('accounts.create') }}"class="btn btn-primary btn-sm btn-flat">
+                                    <i class="fas fa-plus mr-2"></i>
+                                    Create New User
+                                </a>
+                                @endcan
+                            </h3>
                             <div class="card-tools">
                                 <form action="{{ route('accounts.index') }}">
-                                <div class="input-group input-group-sm" style="width: 150px;">
-                                    <input type="text" name="search" class="form-control float-right"
+                                <div class="input-group input-group-sm pt-1" style="width: 150px;">
+                                    <input
+                                        type="text"
+                                        name="search"
+                                        class="form-control float-right"
+                                        value="{{ $_GET['search'] ?? '' }}"
                                         placeholder="Search">
 
                                     <div class="input-group-append">
@@ -45,7 +56,7 @@
                             </div>
                         </div>
                         <!-- /.card-header -->
-                        <div class="card-body">
+                        <div class="card-body table-responsive">
                             <table class="table table-bordered">
                                 <thead>
                                     <tr>
@@ -54,7 +65,7 @@
                                         <th>Name</th>
                                         <th>Role</th>
                                         <th>Created</th>
-                                        <th></th>
+                                        <th>Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -66,35 +77,43 @@
                                         <td>{{ $account->role->name }}</td>
                                         <td>{{ $account->created_at->toDayDateTimeString() }}</td>
                                         <td class="d-flex p-2 justify-content-end">
-                                            <a class="btn btn-info btn-sm"
-                                                href="{{ route('accounts.show', ['account' => $account]) }}">
-                                                <i class="fas fa-file">
-                                                </i>
-                                                View
-                                            </a>
-                                            @if (auth()->user()->id == 1)
-                                                @if ($account->deleted_at == null)
-                                                <form class="px-1" method="POST"
-                                                    action="{{ route('accounts.destroy', ['account' => $account]) }}">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button class="btn btn-danger btn-sm" type="submit">
-                                                        <i class="fas fa-trash">
-                                                        </i>
-                                                        Deactivate
-                                                    </button>
-                                                </form>
-                                                @else
-                                                <form class="px-1" method="POST"
-                                                    action="{{ route('accounts.restore', ['account' => $account->id]) }}">
-                                                    @csrf
-                                                    @method('PUT')
-                                                    <button class="btn btn-success btn-sm" type="submit">
-                                                        <i class="fas fa-check">
-                                                        </i>
-                                                        Reactivate
-                                                    </button>
-                                                </form>
+                                            @if ($account->id == 1)
+                                                <button class="btn btn-primary btn-block btn-sm" type="button">
+                                                    <i class="fas fa-user-tie">
+                                                    </i>
+                                                    Superadmin
+                                                </button>
+                                            @else
+                                                <a class="btn btn-info btn-sm"
+                                                    href="{{ route('accounts.show', ['account' => $account]) }}">
+                                                    <i class="fas fa-file">
+                                                    </i>
+                                                    View
+                                                </a>
+                                                @if (auth()->user()->id == 1)
+                                                    @if ($account->deleted_at == null)
+                                                    <form class="px-1" method="POST"
+                                                        action="{{ route('accounts.destroy', ['account' => $account]) }}">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button class="btn btn-danger btn-sm" type="submit">
+                                                            <i class="fas fa-trash">
+                                                            </i>
+                                                            Deactivate
+                                                        </button>
+                                                    </form>
+                                                    @else
+                                                    <form class="px-1" method="POST"
+                                                        action="{{ route('accounts.restore', ['account' => $account->id]) }}">
+                                                        @csrf
+                                                        @method('PUT')
+                                                        <button class="btn btn-success btn-sm" type="submit">
+                                                            <i class="fas fa-check">
+                                                            </i>
+                                                            Reactivate
+                                                        </button>
+                                                    </form>
+                                                    @endif
                                                 @endif
                                             @endif
                                         </td>
@@ -108,7 +127,7 @@
                         <!-- /.card-body -->
                         <div class="card-footer clearfix">
                             <ul class="pagination pagination-sm m-0 float-right">
-                                {{ $accounts->links() }}
+                                {{ $accounts->onEachSide(1)->links() }}
                             </ul>
                         </div>
                     </div>

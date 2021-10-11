@@ -6,6 +6,7 @@ use App\Models\Log;
 use App\Events\UserLoggedIn;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Support\Facades\Log as FacadesLog;
 
 class LogUserLogin
 {
@@ -27,6 +28,8 @@ class LogUserLogin
      */
     public function handle(UserLoggedIn $event)
     {
+        FacadesLog::channel('daily')->info('User Login', [$event->user]);
+
         Log::create([
             'user_id' => $event->user->id,
             'type' => 'Login',
