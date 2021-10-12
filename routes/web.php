@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\AccountController;
+use App\Http\Controllers\SupplierController;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,12 +27,15 @@ Route::middleware(['auth'])->group(function () {
 
 
 
-
+    // Admin
     Route::middleware(['admin'])->group(function () {
-
+        // Accounts
         Route::put('/accounts/restore', [AccountController::class, 'restore'])->name('accounts.restore');
         Route::resource('accounts', AccountController::class);
 
+        // Suppliers
+        Route::put('/suppliers/restore', [SupplierController::class, 'restore'])->name('suppliers.restore');
+        Route::resource('suppliers', SupplierController::class);
     });
 
 });

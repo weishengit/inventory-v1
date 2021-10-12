@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\Log;
 use App\Models\Role;
 use App\Models\User;
-use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Events\UserEditEvent;
 use App\Events\UserDeleteEvent;
@@ -120,15 +119,21 @@ class AccountController extends Controller
             FacadesLog::channel('dailysuspicious')->alert('User['.auth()->user()->id.'] Tried To Enter Page [Account.Show] User['.$id.'] Without Proper Authorization');
             abort(403);
         }
+        try {
+            $user = User::withTrashed()->findOrFail($id);
 
-        $user = User::withTrashed()->findOrFail($id);
+            $logs = Log::where('user_id', $id)->orderBy('id', 'DESC')->paginate(5);
 
-        $logs = Log::where('user_id', $id)->orderBy('id', 'DESC')->paginate(5);
+            if ($last_login = Log::where('user_id', $id)->where('type', 'Login')->orderBy('id', 'DESC')->first()) {
+                $last_login = $last_login->created_at->toDayDateTimeString();
+            }
+        } catch (\Throwable $th) {
+            FacadesLog::channel('dailyerror')->alert('Error : User['.auth()->user()->id.'] Encountered An Error To [View Account]', [
+                'error' => $th->getMessage()
+            ]);
 
-        if ($last_login = Log::where('user_id', $id)->where('type', 'Login')->orderBy('id', 'DESC')->first()) {
-            $last_login = $last_login->created_at->toDayDateTimeString();
+            return redirect()->route('accounts.index')->with('message', "$user->name could not be found" );
         }
-
 
         return view('admin.accounts.show', [
             'user' => $user,

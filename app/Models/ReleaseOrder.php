@@ -27,7 +27,7 @@ class ReleaseOrder extends Model
 
     public function status()
     {
-        return $this->belongsTo(Status::class)->select(['status']);
+        return $this->belongsTo(Status::class);
     }
 
     public function supplier()
@@ -37,16 +37,16 @@ class ReleaseOrder extends Model
 
     public function created_by()
     {
-        return $this->belongsTo(User::class, 'created_by')->select(['name']);
+        return $this->belongsTo(User::class, 'created_by');
     }
 
     public function approved_by()
     {
-        return $this->belongsTo(User::class, 'approved_by')->select(['name']);
+        return $this->belongsTo(User::class, 'approved_by');
     }
 
     public function released_by()
     {
-        return $this->belongsTo(User::class, 'released_by')->select(['name']);
+        return $this->belongsTo(User::class, 'released_by');
     }
 }

@@ -49,7 +49,11 @@
                             <h3 class="profile-username text-center">{{ $user->name }}</h3>
 
                             <p class="text-muted text-center">{{ $user->role->name }}</p>
-
+                            @if ($user->deleted_at == null)
+                            <a class="btn btn-primary btn-block"><b>Active</b></a>
+                            @else
+                            <a class="btn btn-danger btn-block"><b>Inactive</b></a>
+                            @endif
                             <ul class="list-group list-group-unbordered mb-3">
                                 <li class="list-group-item">
                                     <b>Created</b> <a
@@ -66,14 +70,9 @@
                                     </a>
                                 </li>
                             </ul>
-
-                            @if ($user->deleted_at == null)
-                            <a class="btn btn-primary btn-block"><b>Active</b></a>
-                            @else
-                            <a class="btn btn-danger btn-block"><b>Inactive</b></a>
-                            @endif
-
-
+                            @can('superadmin')
+                            <a class="btn btn-warning btn-block" href="{{ route('accounts.edit', ['account' => $user]) }}"><b>Edit Account</b></a>
+                            @endcan
                         </div>
                         <!-- /.card-body -->
                     </div>
@@ -84,11 +83,6 @@
                     <div class="card">
                         <div class="card-header p-2 d-flex">
                             <ul class="nav nav-pills">
-                                <li class="nav-item">
-                                @can('superadmin')
-                                    <a class="nav-link bg-warning mx-1" href="{{ route('accounts.edit', ['account' => $user]) }}"><b>Edit Account</b></a>
-                                @endcan
-                                </li>
                                 <li class="nav-item">
                                     <a class="nav-link active mx-1" href="#activity" data-toggle="tab">Latest Activity
                                     </a>

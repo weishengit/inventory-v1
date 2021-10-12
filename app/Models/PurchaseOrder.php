@@ -27,7 +27,7 @@ class PurchaseOrder extends Model
 
     public function status()
     {
-        return $this->belongsTo(Status::class)->select(['status']);
+        return $this->belongsTo(Status::class);
     }
 
     public function supplier()
@@ -37,16 +37,16 @@ class PurchaseOrder extends Model
 
     public function created_by()
     {
-        return $this->belongsTo(User::class, 'created_by')->select(['name']);
+        return $this->belongsTo(User::class, 'created_by');
     }
 
     public function approved_by()
     {
-        return $this->belongsTo(User::class, 'approved_by')->select(['name']);
+        return $this->belongsTo(User::class, 'approved_by');
     }
 
     public function received_by()
     {
-        return $this->belongsTo(User::class, 'received_by')->select(['name']);
+        return $this->belongsTo(User::class, 'received_by');
     }
 }

@@ -32,7 +32,7 @@
                                 @can('superadmin')
                                 <a href="{{ route('accounts.create') }}"class="btn btn-primary btn-sm btn-flat">
                                     <i class="fas fa-plus mr-2"></i>
-                                    Create New User
+                                    Add New User
                                 </a>
                                 @endcan
                             </h3>

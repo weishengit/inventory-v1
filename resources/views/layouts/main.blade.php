@@ -95,6 +95,35 @@
     </script>
     @endif
 
+    {{-- Webhook --}}
+    <script>
+        const Toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            showCloseButton: true,
+            timer: 0,
+        })
+
+        Echo.channel(`alert-notification`)
+            .listen('UserLoggedIn', (e) => {
+                Toast.fire({
+                    icon: 'info',
+                    title: ` ${e.user.name} has logged in.`,
+                    timer: 10000,
+                    timerProgressBar: true,
+                })
+            })
+            .listen('UserLoggedOutEvent', (e) => {
+                Toast.fire({
+                    icon: 'info',
+                    title: ` ${e.user.name} has logged out.`,
+                    timer: 10000,
+                    timerProgressBar: true,
+                })
+            });
+    </script>
+
     @yield('scripts')
 </body>
 
