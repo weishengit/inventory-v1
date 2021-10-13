@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\AccountController;
 use App\Http\Controllers\SupplierController;
+use App\Http\Controllers\TypeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -36,6 +37,20 @@ Route::middleware(['auth'])->group(function () {
         // Suppliers
         Route::put('/suppliers/restore', [SupplierController::class, 'restore'])->name('suppliers.restore');
         Route::resource('suppliers', SupplierController::class);
+
+        // Types
+        Route::put('/types/restore', [TypeController::class, 'restore'])->name('types.restore');
+        Route::resource('types', TypeController::class);
+
+        // Item
+
+        // Purchase Orders
+
+        // Release Orders
+
+        // Profile
+
+
     });
 
 });

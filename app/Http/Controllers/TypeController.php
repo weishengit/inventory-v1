@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Type;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log as FacadesLog;
+use Illuminate\Support\Facades\Gate;
 
 class TypeController extends Controller
 {
@@ -12,9 +14,27 @@ class TypeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        if (!Gate::allows('admin')) {
+            FacadesLog::channel('dailysuspicious')->alert('User['.auth()->user()->id.'] Tried To Enter Page [Type.Index] Without Proper Authorization');
+            abort(403);
+        }
+
+        if (isset($request->search)) {
+            $request->validate([
+                'search' => 'required', 'string', 'max:250'
+            ]);
+            $keyword = $request->search;
+            $types = Type::withTrashed()->where('name', '%' . $keyword . '%')
+            ->orderBy('id')->paginate(10)->withQueryString();
+        } else {
+            $types = Type::withTrashed()->orderBy('id')->paginate(10);
+        }
+
+        return view('admin.types.index', [
+            'types' => $types
+        ]);
     }
 
     /**

@@ -22,7 +22,7 @@ class CreateSuppliersTable extends Migration
             $table->string('contact_person');
             $table->string('address');
             $table->string('contact');
-            $table->string('email');
+            $table->string('email')->unique();
             $table->timestamps();
             $table->softDeletes();
         });

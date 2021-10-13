@@ -97,7 +97,7 @@ class AccountController extends Controller
             $user->avatar = $path;
             $user->save();
         } catch (\Throwable $th) {
-            FacadesLog::channel('dailyerror')->alert('Error : User['.auth()->user()->id.'] Encountered An Error To [Update Account]', [
+            FacadesLog::channel('dailyerror')->alert('Error : User['.auth()->user()->id.'] Encountered An Error To [Store Account]', [
                 'error' => $th->getMessage()
             ]);
             return redirect()->route('accounts.index')->with('message', "$user->name was not created.");

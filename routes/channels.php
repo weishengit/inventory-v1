@@ -17,6 +17,6 @@ Broadcast::channel('App.Models.User.{id}', function ($user, $id) {
     return (int) $user->id === (int) $id;
 });
 
-Broadcast::channel('admin-notification', function ($user) {
-    return $user->role()->id === 1;
+Broadcast::channel('admin-channel', function ($user) {
+    return $user->role_id === 1;
 });

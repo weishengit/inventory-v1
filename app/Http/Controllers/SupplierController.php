@@ -2,12 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Log;
-use App\Models\PurchaseOrder;
+use App\Models\Item;
 use App\Models\Supplier;
 use Illuminate\Http\Request;
+use App\Models\PurchaseOrder;
+use App\Events\SupplierEditEvent;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Log as FacadesLog;
+use App\Http\Requests\Suppliers\StoreSupplierRequest;
+use App\Http\Requests\Suppliers\UpdateSupplierRequest;
 
 class SupplierController extends Controller
 {
@@ -48,7 +51,12 @@ class SupplierController extends Controller
      */
     public function create()
     {
-        //
+        if (!Gate::allows('admin')) {
+            FacadesLog::channel('dailysuspicious')->alert('User['.auth()->user()->id.'] Tried To Enter Page [Supplier.Create] Without Proper Authorization');
+            abort(403);
+        }
+
+        return view('admin.suppliers.create');
     }
 
     /**
@@ -57,9 +65,24 @@ class SupplierController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreSupplierRequest $request)
     {
-        //
+        if (!Gate::allows('admin')) {
+            FacadesLog::channel('dailysuspicious')->alert('User['.auth()->user()->id.'] Tried To Enter Page [Supplier.Store] Without Proper Authorization', ['supplier' => $request->validated()]);
+            abort(403);
+        }
+
+        try {
+            $supplier = Supplier::create($request->validated());
+        } catch (\Throwable $th) {
+            FacadesLog::channel('dailyerror')->alert('Error : User['.auth()->user()->id.'] Encountered An Error To [Store Supplier]', [
+                'error' => $th->getMessage()
+            ]);
+            return redirect()->route('suppliers.index')->with('message', "Error: [Supplier] was not created.");
+        }
+
+
+        return redirect()->route('suppliers.index')->with('message', "$supplier->company_name has been created.");
     }
 
     /**
@@ -101,7 +124,14 @@ class SupplierController extends Controller
      */
     public function edit(Supplier $supplier)
     {
-        //
+        if (!Gate::allows('admin')) {
+            FacadesLog::channel('dailysuspicious')->alert('User['.auth()->user()->id.'] Tried To Enter Page [Supplier.Edit] Supplier['.$supplier->id.'] Without Proper Authorization');
+            abort(403);
+        }
+
+        return view('admin.suppliers.edit', [
+            'supplier' => $supplier,
+        ]);
     }
 
     /**
@@ -111,19 +141,75 @@ class SupplierController extends Controller
      * @param  \App\Models\Supplier  $supplier
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Supplier $supplier)
+    public function update(UpdateSupplierRequest $request, Supplier $supplier)
     {
-        //
+        if (!Gate::allows('admin')) {
+            FacadesLog::channel('dailysuspicious')->alert('User['.auth()->user()->id.'] Tried To Enter Page [Supplier.Update] Supplier['.$supplier->id.'] Without Proper Authorization');
+            abort(403);
+        }
+
+        $values = $request->validated();
+        try {
+            $supplier->update($values);
+            event(new SupplierEditEvent(auth()->user(), $supplier));
+        } catch (\Throwable $th) {
+            FacadesLog::channel('dailyerror')->alert('Error : User['.auth()->user()->id.'] Encountered An Error To [Update Supplier] Supplier['.$supplier->id.']', [
+                'error' => $th->getMessage()
+            ]);
+
+            return redirect()->route('suppliers.index')->with('message', "$supplier->company_name could not be updated.");
+        }
+
+        return redirect()->route('suppliers.index')->with('message', "$supplier->company_name has been updated.");
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Supplier  $supplier
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function destroy(Supplier $supplier)
     {
-        //
+        if (!Gate::allows('admin')) {
+            FacadesLog::channel('dailysuspicious')->alert('User['.auth()->user()->id.'] Tried To Enter Page [Supplier.Destroy] Supplier['.$supplier->id.'] Without Proper Authorization');
+            abort(403);
+        }
+
+        // Cancel If Supplier Is In Use
+        if (Item::where('supplier_id', $supplier->id)->where('deleted_at', null)->count() > 0) {
+            return redirect()->route('suppliers.index')->with('message', "$supplier->company_name is in use by items, and cannot be disabled" );
+        }
+
+        try {
+            $supplier->delete();
+        } catch (\Throwable $th) {
+            FacadesLog::channel('dailyerror')->alert('Error : User['.auth()->user()->id.'] Encountered An Error To [Disable Account]', [
+                'error' => $th->getMessage()
+            ]);
+            return redirect()->route('suppliers.index')->with('message', "$supplier->company_name could not be disabled" );
+        }
+
+        return redirect()->route('suppliers.index')->with('message', "$supplier->company_name is now disabled" );
+    }
+
+    public function restore(Request $request)
+    {
+        if (!Gate::allows('admin')) {
+            FacadesLog::channel('dailysuspicious')->alert('User['.auth()->user()->id.'] Tried To Enter Page [Supplier.Restore] Supplier['.$request->supplier.'] Without Proper Authorization');
+            abort(403);
+        }
+
+        try {
+            $supplier = Supplier::withTrashed()->where('deleted_at', '!=', null)->findOrFail($request->supplier);
+            $supplier->restore();
+        } catch (\Throwable $th) {
+            FacadesLog::channel('dailyerror')->alert('Error : User['.auth()->user()->id.'] Encountered An Error To [Restore Supplier]', [
+                'error' => $th->getMessage()
+            ]);
+            return redirect()->route('suppliers.index')->with('message', "Error: Could Not Find Supplier" );
+        }
+
+        return redirect()->route('suppliers.index')->with('message', "$supplier->company_name is now active" );
     }
 }

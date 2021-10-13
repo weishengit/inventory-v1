@@ -51,9 +51,7 @@
                                 </li>
                             </ul>
 
-                            @can('superadmin')
                             <a class="btn btn-warning btn-block" href="{{ route('suppliers.edit', ['supplier' => $supplier]) }}"><b>Edit Supplier</b></a>
-                            @endcan
 
                         </div>
                         <!-- /.card-body -->

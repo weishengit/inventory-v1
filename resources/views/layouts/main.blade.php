@@ -124,6 +124,20 @@
             });
     </script>
 
+    @can('admin')
+    <script>
+    Echo.private(`admin-channel`)
+        .listen('SupplierEditEvent', (e) => {
+            Toast.fire({
+                icon: 'info',
+                title: ` ${e.supplier.company_name} was edited by ${e.editor.name}.`,
+                timer: 10000,
+                timerProgressBar: true,
+            })
+        });
+    </script>
+    @endcan
+
     @yield('scripts')
 </body>
 
