@@ -126,6 +126,7 @@
 
                             <div class="card-footer">
                                 <button type="submit" class="btn btn-primary">Create Account</button>
+                                <button type="button" onclick="history.back()" class="btn btn-warning">Back</button>
                             </div>
                         </form>
                     </div><!-- /.card -->

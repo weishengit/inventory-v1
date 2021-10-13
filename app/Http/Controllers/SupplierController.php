@@ -81,7 +81,6 @@ class SupplierController extends Controller
             return redirect()->route('suppliers.index')->with('message', "Error: [Supplier] was not created.");
         }
 
-
         return redirect()->route('suppliers.index')->with('message', "$supplier->company_name has been created.");
     }
 
@@ -184,7 +183,7 @@ class SupplierController extends Controller
         try {
             $supplier->delete();
         } catch (\Throwable $th) {
-            FacadesLog::channel('dailyerror')->alert('Error : User['.auth()->user()->id.'] Encountered An Error To [Disable Account]', [
+            FacadesLog::channel('dailyerror')->alert('Error : User['.auth()->user()->id.'] Encountered An Error To [Disable Supplier]', [
                 'error' => $th->getMessage()
             ]);
             return redirect()->route('suppliers.index')->with('message', "$supplier->company_name could not be disabled" );

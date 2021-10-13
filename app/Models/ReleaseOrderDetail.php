@@ -19,7 +19,7 @@ class ReleaseOrderDetail extends Model
 
     public function releaseOrder()
     {
-        return $this->belongsTo(ReleaseOrder::class);
+        return $this->belongsTo(ReleaseOrder::class, 'ro_id', 'id');
     }
 
     public function item()

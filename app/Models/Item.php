@@ -20,7 +20,11 @@ class Item extends Model
         'critical_level'
     ];
 
-    public function category()
+    protected $attributes = [
+        'quantity' => 0,
+    ];
+
+    public function type()
     {
         return $this->belongsTo(Type::class);
     }

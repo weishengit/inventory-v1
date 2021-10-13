@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\AccountController;
+use App\Http\Controllers\ItemController;
+use App\Http\Controllers\LogController;
 use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\TypeController;
 
@@ -24,9 +26,11 @@ Auth::routes();
 Route::redirect('/', '/home', 302);
 
 Route::middleware(['auth'])->group(function () {
+    // Home
     Route::get('/home', [HomeController::class, 'index'])->name('home');
 
-
+    // Logs
+    Route::get('/logs', [LogController::class, 'index'])->name('logs');
 
     // Admin
     Route::middleware(['admin'])->group(function () {
@@ -41,16 +45,12 @@ Route::middleware(['auth'])->group(function () {
         // Types
         Route::put('/types/restore', [TypeController::class, 'restore'])->name('types.restore');
         Route::resource('types', TypeController::class);
-
-        // Item
-
-        // Purchase Orders
-
-        // Release Orders
-
-        // Profile
-
-
     });
+
+    // Regular
+
+    // Item
+    Route::put('/items/restore', [ItemController::class, 'restore'])->name('items.restore');
+    Route::resource('items', ItemController::class);
 
 });

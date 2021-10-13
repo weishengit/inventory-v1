@@ -112,7 +112,7 @@
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="#" class="nav-link">
+                            <a href="{{ route('items.index') }}" class="nav-link">
                                 <i class="fas fa-box nav-icon"></i>
                                 <p>View Items</p>
                             </a>
@@ -165,7 +165,7 @@
 
                 {{-- LOGS --}}
                 <li class="nav-item">
-                    <a href="#" class="nav-link">
+                    <a href="{{ route('logs') }}" class="nav-link">
                         <i class="nav-icon fas fa-book"></i>
                         <p>
                             Logs
