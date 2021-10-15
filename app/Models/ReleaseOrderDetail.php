@@ -14,7 +14,6 @@ class ReleaseOrderDetail extends Model
         'ro_id',
         'item_id',
         'quantity',
-        'unit_price'
     ];
 
     public function releaseOrder()

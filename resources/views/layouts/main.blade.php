@@ -7,9 +7,9 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>
         @if (strpos(request()->path(), '/') > 0)
-            {{ substr(ucfirst(request()->path()), 0, strpos(request()->path(), '/')) }}
+            {{ ucwords(str_replace('_', ' ', substr(request()->path(), 0, strpos(request()->path(), '/')))) }}
         @else
-            {{ ucfirst(request()->path()); }}
+            {{ ucwords(str_replace('_', ' ', request()->path())); }}
         @endif
         |
         {{

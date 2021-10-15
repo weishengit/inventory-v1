@@ -14,7 +14,6 @@ class PurchaseOrderDetail extends Model
         'po_id',
         'item_id',
         'quantity',
-        'unit_price'
     ];
 
     public function purchaseOrder()

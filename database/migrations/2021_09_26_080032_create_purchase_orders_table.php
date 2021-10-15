@@ -21,7 +21,7 @@ class CreatePurchaseOrdersTable extends Migration
             $table->foreignId('received_by')->constrained('users')->nullable();
             $table->foreignId('status_id')->constrained('statuses')->nullable();
             $table->string('po_num');
-            $table->string('memo');
+            $table->string('memo')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

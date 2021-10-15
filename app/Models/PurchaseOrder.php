@@ -22,7 +22,7 @@ class PurchaseOrder extends Model
 
     public function po_details()
     {
-        return $this->hasMany(PurchaseOrderDetail::class);
+        return $this->hasMany(PurchaseOrderDetail::class, 'po_id', 'id')->withTrashed();
     }
 
     public function status()
@@ -35,17 +35,17 @@ class PurchaseOrder extends Model
         return $this->belongsTo(Supplier::class);
     }
 
-    public function created_by()
+    public function creator()
     {
         return $this->belongsTo(User::class, 'created_by');
     }
 
-    public function approved_by()
+    public function approver()
     {
         return $this->belongsTo(User::class, 'approved_by');
     }
 
-    public function received_by()
+    public function receiver()
     {
         return $this->belongsTo(User::class, 'received_by');
     }

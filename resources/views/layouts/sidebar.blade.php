@@ -75,29 +75,6 @@
                                 <p>Types</p>
                             </a>
                         </li>
-                        <li class="nav-item menu-closed">
-                            <a href="#" class="nav-link">
-                                <i class="fas fa-file-invoice nav-icon"></i>
-                                <p>
-                                    Approval
-                                    <i class="right fas fa-angle-left"></i>
-                                </p>
-                            </a>
-                            <ul class="nav nav-treeview">
-                                <li class="nav-item">
-                                    <a href="{{ route('accounts.index') }}" class="nav-link">
-                                        <i class="far fa-check-circle nav-icon"></i>
-                                        <p>Purchase Order</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="{{ route('suppliers.index') }}" class="nav-link">
-                                        <i class="far fa-check-circle nav-icon"></i>
-                                        <p>Release Order</p>
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
                     </ul>
                 </li>
                 @endcan
@@ -117,14 +94,31 @@
                                 <p>View Items</p>
                             </a>
                         </li>
-                        <li class="nav-item">
+                        <li class="nav-item menu-closed">
                             <a href="#" class="nav-link">
-                                <i class="fas fa-boxes nav-icon"></i>
-                                <p>View Inventory</p>
+                                <i class="fas fa-file-invoice nav-icon"></i>
+                                <p>
+                                    View Orders
+                                    <i class="right fas fa-angle-left"></i>
+                                </p>
                             </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="{{ route('purchase_orders.index') }}" class="nav-link">
+                                        <i class="far fa-check-circle nav-icon"></i>
+                                        <p>Purchase Order</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{ route('release_orders.index') }}" class="nav-link">
+                                        <i class="far fa-check-circle nav-icon"></i>
+                                        <p>Release Order</p>
+                                    </a>
+                                </li>
+                            </ul>
                         </li>
                         <li class="nav-item">
-                            <a href="#" class="nav-link">
+                            <a href="{{ route('purchase_orders.create') }}" class="nav-link">
                                 <i class="fas fa-plus nav-icon"></i>
                                 <p>Create Purchase Order</p>
                             </a>

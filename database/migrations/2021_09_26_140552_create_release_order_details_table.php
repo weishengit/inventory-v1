@@ -18,7 +18,6 @@ class CreateReleaseOrderDetailsTable extends Migration
             $table->foreignId('ro_id')->constrained('release_orders');
             $table->foreignId('item_id')->constrained('items');
             $table->unsignedInteger('quantity');
-            $table->decimal('unit_price');
             $table->timestamps();
             $table->softDeletes();
         });

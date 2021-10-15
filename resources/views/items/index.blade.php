@@ -88,6 +88,8 @@
                                         <td>{{ $item->unit_price }}</td>
                                         <td>{{ $item->quantity }}</td>
                                         <td>{{ $item->critical_level }}</td>
+                                        @can('admin')
+
                                         <td class="d-flex p-2 justify-content-end">
                                             <a class="btn btn-info btn-sm"
                                                 href="{{ route('items.edit', $item) }}">
@@ -119,6 +121,7 @@
                                             </form>
                                             @endif
                                         </td>
+                                        @endcan
                                     </tr>
                                     @empty
                                     <tr><th colspan="6" class="text-center">Could Not Load Items</th></tr>

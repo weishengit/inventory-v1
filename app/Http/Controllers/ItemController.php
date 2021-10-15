@@ -143,6 +143,7 @@ class ItemController extends Controller
             FacadesLog::channel('dailysuspicious')->alert('User['.auth()->user()->id.'] Tried To Enter Page [Type.Destroy] Type['.$item->id.'] Without Proper Authorization');
             abort(403);
         }
+
         try {
             // Cancel If Item Has Pending Purchase/Release Orders
             $pos = PurchaseOrderDetail::with('purchaseOrder')->where('item_id', $item->id)->where('deleted_at', null)->get();

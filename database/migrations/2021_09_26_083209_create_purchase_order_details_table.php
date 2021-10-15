@@ -18,7 +18,6 @@ class CreatePurchaseOrderDetailsTable extends Migration
             $table->foreignId('po_id')->constrained('purchase_orders');
             $table->foreignId('item_id')->constrained('items');
             $table->unsignedInteger('quantity');
-            $table->decimal('unit_price');
             $table->timestamps();
             $table->softDeletes();
         });

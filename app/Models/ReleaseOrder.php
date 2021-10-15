@@ -11,7 +11,7 @@ class ReleaseOrder extends Model
     use HasFactory, SoftDeletes;
 
     protected $fillable = [
-        'supplier_id',
+        'released_to',
         'created_by',
         'approved_by',
         'released_by',
@@ -22,7 +22,7 @@ class ReleaseOrder extends Model
 
     public function ro_details()
     {
-        return $this->hasMany(PurchaseOrderDetail::class);
+        return $this->hasMany(ReleaseOrderDetail::class, 'ro_id');
     }
 
     public function status()
@@ -30,22 +30,17 @@ class ReleaseOrder extends Model
         return $this->belongsTo(Status::class);
     }
 
-    public function supplier()
-    {
-        return $this->belongsTo(Supplier::class);
-    }
-
-    public function created_by()
+    public function creator()
     {
         return $this->belongsTo(User::class, 'created_by');
     }
 
-    public function approved_by()
+    public function approver()
     {
         return $this->belongsTo(User::class, 'approved_by');
     }
 
-    public function released_by()
+    public function releaser()
     {
         return $this->belongsTo(User::class, 'released_by');
     }
