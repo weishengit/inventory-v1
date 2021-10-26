@@ -17,9 +17,9 @@ class CreateReleaseOrdersTable extends Migration
             $table->id();
             $table->string('released_to');
             $table->foreignId('created_by')->constrained('users');
-            $table->foreignId('approved_by')->constrained('users')->nullable();
-            $table->foreignId('released_by')->constrained('users')->nullable();
-            $table->foreignId('status_id')->constrained('statuses')->nullable();
+            $table->foreignId('approved_by')->nullable()->constrained('users');
+            $table->foreignId('released_by')->nullable()->constrained('users');
+            $table->foreignId('status_id')->constrained('statuses');
             $table->string('ro_num');
             $table->string('memo')->nullable();
             $table->timestamps();

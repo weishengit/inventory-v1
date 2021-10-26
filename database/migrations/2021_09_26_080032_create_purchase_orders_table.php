@@ -17,9 +17,9 @@ class CreatePurchaseOrdersTable extends Migration
             $table->id();
             $table->foreignId('supplier_id')->constrained('suppliers');
             $table->foreignId('created_by')->constrained('users');
-            $table->foreignId('approved_by')->constrained('users')->nullable();
-            $table->foreignId('received_by')->constrained('users')->nullable();
-            $table->foreignId('status_id')->constrained('statuses')->nullable();
+            $table->foreignId('approved_by')->nullable()->constrained('users');
+            $table->foreignId('received_by')->nullable()->constrained('users');
+            $table->foreignId('status_id')->constrained('statuses');
             $table->string('po_num');
             $table->string('memo')->nullable();
             $table->timestamps();
