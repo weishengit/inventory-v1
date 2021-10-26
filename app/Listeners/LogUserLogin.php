@@ -33,7 +33,7 @@ class LogUserLogin
         Log::create([
             'user_id' => $event->user->id,
             'type' => 'Login',
-            'info' => 'Logged In'
+            'info' => $event->user->name . ' Logged In'
         ]);
     }
 }

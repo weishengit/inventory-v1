@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\ApprovedPurchaseOrder;
+use App\Events\CreatedPurchaseOrder;
 use App\Models\Item;
 use App\Models\Supplier;
 use Illuminate\Http\Request;
@@ -91,6 +93,8 @@ class PurchaseOrderController extends Controller
                 ]);
             }
 
+            event(new CreatedPurchaseOrder(auth()->user(), $po));
+
             DB::commit();
         } catch (\Throwable $th) {
             DB::rollBack();
@@ -168,6 +172,9 @@ class PurchaseOrderController extends Controller
                 'approved_by' => auth()->user()->id,
                 'status_id' => 2
             ]);
+
+            event(new ApprovedPurchaseOrder(auth()->user(), $purchaseOrder));
+
         } catch (\Throwable $th) {
             FacadesLog::channel('dailyerror')->alert('Error : User['.auth()->user()->id.'] Encountered An Error To [Approve PurchaseOrder]', [
                 'error' => $th->getMessage()

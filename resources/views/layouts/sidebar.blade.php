@@ -143,13 +143,27 @@
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="#" class="nav-link">
+                            <a href="#" class="nav-link menu-closed">
                                 <i class="fas fa-dolly-flatbed nav-icon"></i>
-                                <p>Inventory Movement</p>
+                                <p>Inventory Movement<i class="right fas fa-angle-left"></i></p>
                             </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="{{ route('inventory.incoming') }}" class="nav-link">
+                                        <i class="far fa-check-circle nav-icon"></i>
+                                        <p>Incoming</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{ route('inventory.outgoing') }}" class="nav-link">
+                                        <i class="far fa-check-circle nav-icon"></i>
+                                        <p>Outgoing</p>
+                                    </a>
+                                </li>
+                            </ul>
                         </li>
                         <li class="nav-item">
-                            <a href="#" class="nav-link">
+                            <a href="{{ route('report.statistics') }}" class="nav-link">
                                 <i class="fas fa-chart-pie nav-icon"></i>
                                 <p>Item Statistics</p>
                             </a>

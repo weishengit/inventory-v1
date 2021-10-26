@@ -3,12 +3,13 @@
 namespace App\Listeners;
 
 use App\Models\Log;
-use App\Events\UserLoggedOutEvent;
+use App\Events\CreatedPurchaseOrder;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Support\Facades\Log as FacadesLog;
 
-class LogUserLogoutListener
+
+class LogPurchaseOrder
 {
     /**
      * Create the event listener.
@@ -23,17 +24,17 @@ class LogUserLogoutListener
     /**
      * Handle the event.
      *
-     * @param  UserLoggedOutEvent  $event
+     * @param  CreatedPurchaseOrder  $event
      * @return void
      */
-    public function handle(UserLoggedOutEvent $event)
+    public function handle(CreatedPurchaseOrder $event)
     {
-        FacadesLog::channel('daily')->info('User Logout', [$event->user]);
+        FacadesLog::channel('daily')->info('User Login', [$event->creator]);
 
         Log::create([
-            'user_id' => $event->user->id,
-            'type' => 'Login',
-            'info' =>  $event->user->name . ' Logged Out'
+            'user_id' => $event->creator->id,
+            'type' => 'Purchase Order',
+            'info' => $event->creator->name . 'created PO#' . $event->purchaseOrder->po_num
         ]);
     }
 }

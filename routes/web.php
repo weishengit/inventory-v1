@@ -31,7 +31,12 @@ Route::redirect('/', '/home', 302);
 Route::middleware(['auth'])->group(function () {
     // Home
     Route::get('/home', [HomeController::class, 'index'])->name('home');
-
+    // Incoming
+    Route::get('/inventory/incoming', [HomeController::class, 'incoming'])->name('inventory.incoming');
+    // Outgoing
+    Route::get('/inventory/outgoing', [HomeController::class, 'outgoing'])->name('inventory.outgoing');
+    // Statistics
+    Route::get('/reports/stats', [HomeController::class, 'statistics'])->name('report.statistics');
     // Logs
     Route::get('/logs', [LogController::class, 'index'])->name('logs');
 

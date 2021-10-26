@@ -134,6 +134,24 @@
                 timer: 10000,
                 timerProgressBar: true,
             })
+        })
+        .listen('CreatedPurchaseOrder', (e) => {
+            console.log(e);
+            Toast.fire({
+                icon: 'info',
+                title: `PO# ${e.purchaseOrder.po_num} was created by ${e.creator.name}.`,
+                timer: 30000,
+                timerProgressBar: true,
+            })
+        })
+        .listen('ApprovedPurchaseOrder', (e) => {
+            console.log(e);
+            Toast.fire({
+                icon: 'info',
+                title: `PO# ${e.purchaseOrder.po_num} was approved by ${e.approver.name}.`,
+                timer: 30000,
+                timerProgressBar: true,
+            })
         });
     </script>
     @endcan

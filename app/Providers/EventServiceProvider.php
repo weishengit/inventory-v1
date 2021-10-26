@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Events\ApprovedPurchaseOrder;
+use App\Events\CreatedPurchaseOrder;
 use App\Events\SupplierEditEvent;
 use App\Events\UserLoggedIn;
 use App\Events\UserEditEvent;
@@ -10,9 +12,11 @@ use App\Events\UserDeleteEvent;
 use App\Listeners\LogUserLogin;
 use App\Events\UserRestoreEvent;
 use App\Events\UserLoggedOutEvent;
+use App\Listeners\LogApprovedPurchaseOrder;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Auth\Events\Registered;
 use App\Listeners\LogDeleteUserListener;
+use App\Listeners\LogPurchaseOrder;
 use App\Listeners\LogUserLogoutListener;
 use App\Listeners\LogRestoreUserListener;
 use App\Listeners\LogSupplierEditListener;
@@ -47,6 +51,12 @@ class EventServiceProvider extends ServiceProvider
         ],
         SupplierEditEvent::class => [
             LogSupplierEditListener::class
+        ],
+        CreatedPurchaseOrder::class => [
+            LogPurchaseOrder::class
+        ],
+        ApprovedPurchaseOrder::class => [
+            LogApprovedPurchaseOrder::class
         ],
     ];
 
