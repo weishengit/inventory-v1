@@ -143,7 +143,7 @@
                                                     <button class="btn btn-success btn-sm" type="submit">
                                                         <i class="fas fa-check">
                                                         </i>
-                                                        Receive
+                                                        Release
                                                     </button>
                                                 </form>
                                                 @elseif ($ro->status_id == 3)

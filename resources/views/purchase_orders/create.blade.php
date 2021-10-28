@@ -13,7 +13,7 @@
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="#">Home</a></li>
-                        <li class="breadcrumb-item"><a href="#">Purchase Order</a></li>
+                        <li class="breadcrumb-item"><a href="{{ route('release_orders.index') }}">Purchase Order</a></li>
                         <li class="breadcrumb-item active">Create</li>
                     </ol>
                 </div><!-- /.col -->
@@ -124,7 +124,7 @@
                                             <ul class="pagination pagination-sm m-0 float-right">
                                             </ul>
                                         </div>
-                                        <button class="btn btn-primary" type="button" onclick="stepper.previous()">Previous</button>
+                                        <button class="btn btn-warning" type="button" onclick="stepper.previous()">Back</button>
                                         <button type="submit" class="btn btn-primary">Submit</button>
                                     </div>
                                 </div>

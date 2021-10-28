@@ -8,12 +8,12 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-0">Create Purchase Order</h1>
+                    <h1 class="m-0">Create Release Order</h1>
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="#">Home</a></li>
-                        <li class="breadcrumb-item"><a href="#">Purchase Order</a></li>
+                        <li class="breadcrumb-item"><a href="{{ route('release_orders.index') }}">Release Order</a></li>
                         <li class="breadcrumb-item active">Create</li>
                     </ol>
                 </div><!-- /.col -->
@@ -32,7 +32,7 @@
                     @csrf
                     <div class="card card-default">
                         <div class="card-header">
-                            <h3 class="card-title">Create Purchase Order</h3>
+                            <h3 class="card-title">Create Release Order</h3>
                         </div>
                         <div class="card-body p-0">
                             <div class="bs-stepper">
@@ -125,7 +125,7 @@
                                             <ul class="pagination pagination-sm m-0 float-right">
                                             </ul>
                                         </div>
-                                        <button class="btn btn-primary" type="button" onclick="stepper.previous()">Previous</button>
+                                        <button class="btn btn-warning" type="button" onclick="stepper.previous()">Back</button>
                                         <button type="submit" class="btn btn-primary">Submit</button>
                                     </div>
                                 </div>

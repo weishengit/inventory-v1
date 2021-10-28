@@ -31,6 +31,8 @@ Route::redirect('/', '/home', 302);
 Route::middleware(['auth'])->group(function () {
     // Home
     Route::get('/home', [HomeController::class, 'index'])->name('home');
+    // New
+    Route::get('/new', [HomeController::class, 'new'])->name('new.index');
     // Incoming
     Route::get('/inventory/incoming', [HomeController::class, 'incoming'])->name('inventory.incoming');
     // Outgoing

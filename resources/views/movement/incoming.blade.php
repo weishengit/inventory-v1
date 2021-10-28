@@ -60,15 +60,6 @@
                                     <tr>...</tr>
                                 @endforelse
                                 </tbody>
-                                <tfoot>
-                                    <tr>
-                                        <th>PO Num</th>
-                                        <th>Item ID</th>
-                                        <th>Item Name</th>
-                                        <th>Ordered Quantity</th>
-                                        <th>Order Created</th>
-                                    </tr>
-                                </tfoot>
                             </table>
                         </div>
                         <!-- /.card-body -->

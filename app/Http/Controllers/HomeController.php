@@ -20,6 +20,11 @@ class HomeController extends Controller
         return view('home');
     }
 
+    public function new()
+    {
+        return view('new');
+    }
+
     public function incoming()
     {
         $pos = PurchaseOrder::orderBy('id', 'DESC')->get();
