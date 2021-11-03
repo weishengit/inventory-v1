@@ -19,9 +19,9 @@ class CreateItemsTable extends Migration
             $table->foreignId('type_id')->constrained('types');
             $table->string('sku')->unique();
             $table->string('name');
-            $table->string('unit_price');
-            $table->string('quantity');
-            $table->string('critical_level');
+            $table->decimal('unit_price', 13, 4, true);
+            $table->unsignedBigInteger('quantity');
+            $table->unsignedBigInteger('critical_level');
             $table->timestamps();
             $table->softDeletes();
         });

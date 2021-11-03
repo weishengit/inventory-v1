@@ -32,7 +32,7 @@
                     <div class="card card-primary card-outline">
                         <div class="card-body box-profile">
 
-                            <div class="text-center">
+                            {{-- <div class="text-center">
                                 @if(isset($user->avatar))
                                 <img src="{{ asset('storage/'. $user->avatar) }}"
                                     style="object-fit: contain;
@@ -44,7 +44,7 @@
                                 <img src="{{ asset('dist/img/default-150x150.png') }}"
                                     class="profile-user-img img-fluid img-circle" alt="User Image">
                                 @endif
-                            </div>
+                            </div> --}}
 
                             <h3 class="profile-username text-center">{{ $user->name }}</h3>
 

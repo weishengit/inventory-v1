@@ -12,7 +12,7 @@
         <!-- Sidebar user panel (optional) -->
         <div class="user-panel mt-3 pb-3 mb-3 d-flex">
             <div class="image">
-                @if(isset(auth()->user()->avatar))
+                @if(false)
                     <img
                         src="{{ asset('storage/' . auth()->user()->avatar) }}"
                         class="img-circle elevation-2"
@@ -22,7 +22,15 @@
                         max-height: 100px;
                         margin-bottom: 1rem;">
                 @else
-                    <img src="{{ asset('dist/img/default-150x150.png') }}" class="img-circle elevation-2" alt="User Image">
+                    <img
+                    src="https://img.icons8.com/fluency-systems-filled/48/000000/guest-male.png"
+                    class="img-circle elevation-2"
+                    alt="User Image"
+                    style="object-fit: contain;
+                    object-position: center;
+                    max-height: 100px;
+                    margin-bottom: 1rem;">
+                    {{-- <img src="{{ asset('dist/img/default-150x150.png') }}" class="img-circle elevation-2" alt="User Image"> --}}
                 @endif
             </div>
             <div class="info">
@@ -36,6 +44,15 @@
             <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
                 data-accordion="false">
                 {{-- Info --}}
+                <li class="nav-item">
+                    <a href="{{ route('home') }}" class="nav-link">
+                        <i class="nav-icon far fa-keyboard"></i>
+                        <p>
+                            Dashboard
+                        </p>
+                    </a>
+                </li>
+
                 <li class="nav-item">
                     <a href="{{ route('new.index') }}" class="nav-link">
                         <i class="nav-icon far fa-newspaper"></i>

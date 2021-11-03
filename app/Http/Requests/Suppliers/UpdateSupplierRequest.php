@@ -24,13 +24,13 @@ class UpdateSupplierRequest extends FormRequest
     public function rules()
     {
         return [
-            'tin' => ['required', 'string', 'max:255'],
-            'bir' => ['required', 'string', 'max:255'],
-            'vat' => ['required', 'string', 'max:255'],
+            'tin' => ['required', 'numeric', 'max:255'],
+            'bir' => ['required', 'numeric', 'max:255'],
+            'vat' => ['required', 'numeric', 'max:255'],
             'contact_person' => ['required', 'string', 'max:255', 'min:3'],
             'company_name' => ['required', 'string', 'max:255', 'min:3'],
             'address' => ['required', 'string', 'max:255'],
-            'contact' => ['required', 'string', 'max:255'],
+            'contact' => ['required', 'numeric', 'max:255'],
             'email' => ['required', 'email', 'unique:suppliers,email,'.$this->supplier->id],
         ];
     }

@@ -27,7 +27,7 @@ class StoreAccountRequest extends FormRequest
             'email' => ['required', 'email', 'unique:users,email'],
             'name' => ['required', 'string', 'max:255', 'min:2'],
             'password' => ['required', 'confirmed', 'string', 'max:255', 'min:8'],
-            'avatar' => ['required', 'file', 'mimes:png,jpg,jpeg', 'max:2048'],
+            // 'avatar' => ['required', 'file', 'mimes:png,jpg,jpeg', 'max:2048'],
             'role_id' => ['required', 'numeric', 'exists:roles,id']
         ];
     }

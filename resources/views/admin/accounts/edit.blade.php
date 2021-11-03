@@ -31,7 +31,7 @@
                             <h3 class="card-title">Edit Form</h3>
                         </div>
 
-                        <div class="text-center mb-4">
+                        {{-- <div class="text-center mb-4">
                             @if(isset($user->avatar))
                             <img src="{{ asset('storage/' . $user->avatar) }}"
                                 style="object-fit: contain;
@@ -43,7 +43,7 @@
                             <img src="{{ asset('dist/img/default-150x150.png') }}"
                                 class="profile-user-img img-fluid img-circle" alt="User Image">
                             @endif
-                        </div>
+                        </div> --}}
                         <!-- form start -->
                         <form
                             action="{{ route('accounts.update', ['account' => $user]) }}"
@@ -97,7 +97,7 @@
                                         placeholder="Re-type Password">
                                 </div>
                                 {{-- Profile Picture --}}
-                                <div class="form-group">
+                                {{-- <div class="form-group">
                                     <label for="user-avatar">Profile Picture</label>
                                     <div class="input-group">
                                         <div class="custom-file">
@@ -112,7 +112,7 @@
                                             <span class="input-group-text">Upload</span>
                                         </div>
                                     </div>
-                                </div>
+                                </div> --}}
                                 {{-- Role --}}
                                 <div class="input-group mb-3">
                                     <div class="input-group-prepend">

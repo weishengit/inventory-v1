@@ -25,10 +25,10 @@ class StoreReleaseOrderRequest extends FormRequest
     {
         return [
             'released_to' => ['required', 'string', 'max:255'],
-            'ro_num' => ['required', 'string', 'max:255'],
+            'ro_num' => ['required', 'numeric', 'max:255'],
             'memo' => ['nullable', 'string', 'max:1000'],
             'items' => ['required', 'array', 'min:1'],
-            'items.*' => ['required', 'numeric']
+            'items.*' => ['required', 'numeric', 'integer']
         ];
     }
 }

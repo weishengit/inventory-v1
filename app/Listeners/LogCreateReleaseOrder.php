@@ -3,13 +3,11 @@
 namespace App\Listeners;
 
 use App\Models\Log;
-use App\Events\CreatedPurchaseOrder;
+use App\Events\CreateReleaseOrder;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Support\Facades\Log as FacadesLog;
 
-
-class LogPurchaseOrder
+class LogCreateReleaseOrder
 {
     /**
      * Create the event listener.
@@ -24,15 +22,15 @@ class LogPurchaseOrder
     /**
      * Handle the event.
      *
-     * @param  CreatedPurchaseOrder  $event
+     * @param  CreateReleaseOrder  $event
      * @return void
      */
-    public function handle(CreatedPurchaseOrder $event)
+    public function handle(CreateReleaseOrder $event)
     {
         Log::create([
             'user_id' => $event->creator->id,
-            'type' => 'Purchase Order',
-            'info' => $event->creator->name . 'created PO#' . $event->purchaseOrder->po_num
+            'type' => 'Release Order',
+            'info' => $event->creator->name . 'created RO#' . $event->releaseOrder->ro_num
         ]);
     }
 }

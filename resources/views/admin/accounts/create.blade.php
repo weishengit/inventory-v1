@@ -87,7 +87,7 @@
                                         placeholder="Password">
                                 </div>
                                 {{-- Profile Picture --}}
-                                <div class="form-group">
+                                {{-- <div class="form-group">
                                     <label for="user-avatar">Profile Picture</label>
                                     <div class="input-group">
                                         <div class="custom-file">
@@ -103,7 +103,7 @@
                                             <span class="input-group-text">Upload</span>
                                         </div>
                                     </div>
-                                </div>
+                                </div> --}}
                                 {{-- Role --}}
                                 <div class="input-group mb-3">
                                     <div class="input-group-prepend">

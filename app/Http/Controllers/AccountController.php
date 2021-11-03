@@ -88,14 +88,14 @@ class AccountController extends Controller
                 'avatar' => ''
             ]);
 
-            $path = $request->file('avatar')->storeAs(
-                'avatars',
-                $user->id . '-avatar.'. $request->file('avatar')->extension(),
-                'public'
-            );
+            // $path = $request->file('avatar')->storeAs(
+            //     'avatars',
+            //     $user->id . '-avatar.'. $request->file('avatar')->extension(),
+            //     'public'
+            // );
 
-            $user->avatar = $path;
-            $user->save();
+            // $user->avatar = $path;
+            // $user->save();
         } catch (\Throwable $th) {
             FacadesLog::channel('dailyerror')->alert('Error : User['.auth()->user()->id.'] Encountered An Error To [Store Account]', [
                 'error' => $th->getMessage()
@@ -185,15 +185,15 @@ class AccountController extends Controller
             }
 
             // Check If Avatar Changed
-            if ($request->hasFile('avatar')) {
-                $path = $request->file('avatar')->storeAs(
-                    'avatars',
-                    $account->id . '-avatar.'. $request->file('avatar')->extension(),
-                    'public'
-                );
+            // if ($request->hasFile('avatar')) {
+            //     $path = $request->file('avatar')->storeAs(
+            //         'avatars',
+            //         $account->id . '-avatar.'. $request->file('avatar')->extension(),
+            //         'public'
+            //     );
 
-                $values['avatar'] = $path;
-            }
+            //     $values['avatar'] = $path;
+            // }
 
             $account->update($values);
             event(new UserEditEvent(auth()->user(), $account->getOriginal(), $account));

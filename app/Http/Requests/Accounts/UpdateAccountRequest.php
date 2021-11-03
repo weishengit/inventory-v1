@@ -27,7 +27,7 @@ class UpdateAccountRequest extends FormRequest
             'email' => ['required', 'email', 'unique:users,email,'.$this->account->id],
             'name' => ['required', 'string', 'max:255', 'min:2'],
             'password' => ['nullable', 'confirmed', 'string', 'max:255', 'min:8'],
-            'avatar' => ['nullable', 'file', 'mimes:png,jpg,jpeg', 'max:2048'],
+            // 'avatar' => ['nullable', 'file', 'mimes:png,jpg,jpeg', 'max:2048'],
             'role_id' => ['required', 'numeric', 'exists:roles,id']
         ];
     }

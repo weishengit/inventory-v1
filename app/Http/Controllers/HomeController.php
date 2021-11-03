@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Item;
 use App\Models\ReleaseOrder;
 use Illuminate\Http\Request;
 use App\Models\PurchaseOrder;
@@ -17,7 +18,17 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $totalStocks = Item::sum('quantity');
+        $pendingPO = PurchaseOrder::where('status_id', '!=', 4)->Where('status_id', '!=', 5)->count();
+        $pendingRO = ReleaseOrder::where('status_id', '!=', 4)->Where('status_id', '!=', 5)->count();
+        $criticalLevel = Item::whereColumn('quantity', '<=', 'critical_level')->count();
+
+        return view('home', [
+            'totalStocks' => $totalStocks,
+            'pendingPO' => $pendingPO,
+            'pendingRO' => $pendingRO,
+            'criticalLevel' => $criticalLevel,
+        ]);
     }
 
     public function new()
