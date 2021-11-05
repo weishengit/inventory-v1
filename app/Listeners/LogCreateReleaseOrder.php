@@ -30,7 +30,7 @@ class LogCreateReleaseOrder
         Log::create([
             'user_id' => $event->creator->id,
             'type' => 'Release Order',
-            'info' => $event->creator->name . 'created RO#' . $event->releaseOrder->ro_num
+            'info' => $event->creator->name . ' created RO#' . $event->releaseOrder->ro_num
         ]);
     }
 }

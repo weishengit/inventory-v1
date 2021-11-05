@@ -30,7 +30,7 @@ class LogReceivePurchaseOrder
         Log::create([
             'user_id' => $event->approver->id,
             'type' => 'Purchase Order',
-            'info' => $event->approver->name . 'received PO#' . $event->purchaseOrder->po_num
+            'info' => $event->approver->name . ' received PO#' . $event->purchaseOrder->po_num
         ]);
     }
 }

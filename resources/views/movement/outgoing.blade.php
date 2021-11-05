@@ -96,7 +96,7 @@
 <script src="{{ asset('plugins/datatables-buttons/js/buttons.print.min.js') }}"></script>
 <script src="{{ asset('plugins/datatables-buttons/js/buttons.colVis.min.js') }}"></script>
 
-<script>
+<script defer>
     $(document).ready(function() {
         $("#example1").DataTable({
             "responsive": true,

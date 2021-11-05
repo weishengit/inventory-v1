@@ -30,7 +30,7 @@ class LogVoidPurchaseOrder
         Log::create([
             'user_id' => $event->approver->id,
             'type' => 'Purchase Order',
-            'info' => $event->approver->name . 'voided PO#' . $event->purchaseOrder->po_num
+            'info' => $event->approver->name . ' voided PO#' . $event->purchaseOrder->po_num
         ]);
     }
 }

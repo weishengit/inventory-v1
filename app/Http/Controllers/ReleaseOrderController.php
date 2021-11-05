@@ -5,8 +5,13 @@ namespace App\Http\Controllers;
 use App\Models\Item;
 use App\Models\ReleaseOrder;
 use Illuminate\Http\Request;
+use App\Events\VoidReleaseOrder;
+use App\Events\CloseReleaseOrder;
+use App\Events\CreateReleaseOrder;
 use App\Models\ReleaseOrderDetail;
 use Illuminate\Support\Facades\DB;
+use App\Events\ApproveReleaseOrder;
+use App\Events\ReleaseReleaseOrder;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Log as FacadesLog;
 use App\Http\Requests\ReleaseOrder\StoreReleaseOrderRequest;
@@ -86,6 +91,9 @@ class ReleaseOrderController extends Controller
             }
 
             DB::commit();
+
+            event(new CreateReleaseOrder(auth()->user(), $ro));
+
         } catch (\Throwable $th) {
             DB::rollBack();
             FacadesLog::channel('dailyerror')->alert('Error : User['.auth()->user()->id.'] Encountered An Error To [Store Release Order]', [
@@ -94,7 +102,7 @@ class ReleaseOrderController extends Controller
             return redirect()->route('release_orders.index')->with('message', "Error: [Release Order] was not created.");
         }
 
-        return redirect()->route('release_orders.index')->with('message', "$ro->po_num has been created.");
+        return redirect()->route('release_orders.index')->with('message', "$ro->ro_num has been created.");
 
     }
 
@@ -137,8 +145,12 @@ class ReleaseOrderController extends Controller
             $ro_num = $releaseOrder->ro_num;
             $releaseOrder->status_id = 5;
             $releaseOrder->save();
+
+            event(new VoidReleaseOrder(auth()->user(), $releaseOrder));
+
             ReleaseOrderDetail::where('ro_id', $releaseOrder->id)->delete();
             $releaseOrder->delete();
+
         } catch (\Throwable $th) {
             FacadesLog::channel('dailyerror')->alert('Error : User['.auth()->user()->id.'] Encountered An Error To [Void ReleaseOrder]', [
                 'error' => $th->getMessage()
@@ -161,6 +173,8 @@ class ReleaseOrderController extends Controller
                 'approved_by' => auth()->user()->id,
                 'status_id' => 2
             ]);
+            event(new ApproveReleaseOrder(auth()->user(), $releaseOrder));
+
         } catch (\Throwable $th) {
             FacadesLog::channel('dailyerror')->alert('Error : User['.auth()->user()->id.'] Encountered An Error To [Approve ReleaseOrder]', [
                 'error' => $th->getMessage()
@@ -203,14 +217,17 @@ class ReleaseOrderController extends Controller
                 $item->quantity -= $value;
                 $item->save();
             }
+
+            event(new ReleaseReleaseOrder(auth()->user(), $releaseOrder));
+
         } catch (\Throwable $th) {
             FacadesLog::channel('dailyerror')->alert('Error : User['.auth()->user()->id.'] Encountered An Error To [Receive ReleaseOrder]', [
                 'error' => $th->getMessage()
             ]);
-            return redirect()->route('release_orders.index')->with('message', "$releaseOrder->ro_num could not be received" );
+            return redirect()->route('release_orders.index')->with('message', "$releaseOrder->ro_num could not be released" );
         }
 
-        return redirect()->route('release_orders.index')->with('message', "$releaseOrder->ro_num is now received" );
+        return redirect()->route('release_orders.index')->with('message', "$releaseOrder->ro_num is now released" );
     }
 
     public function close(ReleaseOrder $releaseOrder)
@@ -223,6 +240,9 @@ class ReleaseOrderController extends Controller
         try {
             $releaseOrder->status_id = 4;
             $releaseOrder->save();
+
+            event(new CloseReleaseOrder(auth()->user(), $releaseOrder));
+
         } catch (\Throwable $th) {
             FacadesLog::channel('dailyerror')->alert('Error : User['.auth()->user()->id.'] Encountered An Error To [Close ReleaseOrder]', [
                 'error' => $th->getMessage()

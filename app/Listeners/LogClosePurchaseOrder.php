@@ -30,7 +30,7 @@ class LogClosePurchaseOrder
         Log::create([
             'user_id' => $event->approver->id,
             'type' => 'Purchase Order',
-            'info' => $event->approver->name . 'closed PO#' . $event->purchaseOrder->po_num
+            'info' => $event->approver->name . ' closed PO#' . $event->purchaseOrder->po_num
         ]);
     }
 }

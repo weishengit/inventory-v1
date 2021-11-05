@@ -152,7 +152,79 @@
                 timer: 30000,
                 timerProgressBar: true,
             })
-        });
+        })
+        .listen('ReceivePurchaseOrder', (e) => {
+            console.log(e);
+            Toast.fire({
+                icon: 'info',
+                title: `PO# ${e.purchaseOrder.po_num} was received by ${e.approver.name}.`,
+                timer: 30000,
+                timerProgressBar: true,
+            })
+        })
+        .listen('ClosePurchaseOrder', (e) => {
+            console.log(e);
+            Toast.fire({
+                icon: 'info',
+                title: `PO# ${e.purchaseOrder.po_num} was closed by ${e.approver.name}.`,
+                timer: 30000,
+                timerProgressBar: true,
+            })
+        })
+        .listen('VoidPurchaseOrder', (e) => {
+            console.log(e);
+            Toast.fire({
+                icon: 'info',
+                title: `PO# ${e.purchaseOrder.po_num} was voided by ${e.approver.name}.`,
+                timer: 30000,
+                timerProgressBar: true,
+            })
+        })
+        .listen('CreateReleaseOrder', (e) => {
+            console.log(e);
+            Toast.fire({
+                icon: 'info',
+                title: `RO# ${e.releaseOrder.ro_num} was created by ${e.creator.name}.`,
+                timer: 30000,
+                timerProgressBar: true,
+            })
+        })
+        .listen('ApproveReleaseOrder', (e) => {
+            console.log(e);
+            Toast.fire({
+                icon: 'info',
+                title: `RO# ${e.releaseOrder.ro_num} was approved by ${e.approver.name}.`,
+                timer: 30000,
+                timerProgressBar: true,
+            })
+        })
+        .listen('ReleaseReleaseOrder', (e) => {
+            console.log(e);
+            Toast.fire({
+                icon: 'info',
+                title: `RO# ${e.releaseOrder.ro_num} was released by ${e.approver.name}.`,
+                timer: 30000,
+                timerProgressBar: true,
+            })
+        })
+        .listen('CloseReleaseOrder', (e) => {
+            console.log(e);
+            Toast.fire({
+                icon: 'info',
+                title: `RO# ${e.releaseOrder.ro_num} was closed by ${e.approver.name}.`,
+                timer: 30000,
+                timerProgressBar: true,
+            })
+        })
+        .listen('VoidReleaseOrder', (e) => {
+            console.log(e);
+            Toast.fire({
+                icon: 'info',
+                title: `RO# ${e.releaseOrder.ro_num} was voided by ${e.approver.name}.`,
+                timer: 30000,
+                timerProgressBar: true,
+            })
+        })
     </script>
     @endcan
 

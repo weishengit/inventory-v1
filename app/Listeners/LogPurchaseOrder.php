@@ -32,7 +32,7 @@ class LogPurchaseOrder
         Log::create([
             'user_id' => $event->creator->id,
             'type' => 'Purchase Order',
-            'info' => $event->creator->name . 'created PO#' . $event->purchaseOrder->po_num
+            'info' => $event->creator->name . ' created PO#' . $event->purchaseOrder->po_num
         ]);
     }
 }

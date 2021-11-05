@@ -30,7 +30,7 @@ class LogCloseReleaseOrder
         Log::create([
             'user_id' => $event->approver->id,
             'type' => 'Release Order',
-            'info' => $event->approver->name . 'closed RO#' . $event->releaseOrder->ro_num
+            'info' => $event->approver->name . ' closed RO#' . $event->releaseOrder->ro_num
         ]);
     }
 }

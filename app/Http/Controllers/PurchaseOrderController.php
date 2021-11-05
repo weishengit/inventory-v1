@@ -2,15 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use App\Events\ApprovedPurchaseOrder;
-use App\Events\CreatedPurchaseOrder;
 use App\Models\Item;
 use App\Models\Supplier;
 use Illuminate\Http\Request;
 use App\Models\PurchaseOrder;
+use App\Events\VoidPurchaseOrder;
+use App\Events\ClosePurchaseOrder;
 use Illuminate\Support\Facades\DB;
 use App\Models\PurchaseOrderDetail;
+use App\Events\CreatedPurchaseOrder;
+use App\Events\ReceivePurchaseOrder;
 use Illuminate\Support\Facades\Gate;
+use App\Events\ApprovedPurchaseOrder;
 use Illuminate\Support\Facades\Log as FacadesLog;
 use App\Http\Requests\PurchaseOrder\StorePurchaseOrderRequest;
 
@@ -148,8 +151,12 @@ class PurchaseOrderController extends Controller
             $po_num = $purchaseOrder->po_num;
             $purchaseOrder->status_id = 5;
             $purchaseOrder->save();
+
+            event(new VoidPurchaseOrder(auth()->user(), $purchaseOrder));
+
             PurchaseOrderDetail::where('po_id', $purchaseOrder->id)->delete();
             $purchaseOrder->delete();
+
         } catch (\Throwable $th) {
             FacadesLog::channel('dailyerror')->alert('Error : User['.auth()->user()->id.'] Encountered An Error To [Void PurchaseOrder]', [
                 'error' => $th->getMessage()
@@ -196,6 +203,9 @@ class PurchaseOrderController extends Controller
             $purchaseOrder->received_by = auth()->user()->id;
             $purchaseOrder->status_id = 3;
             $purchaseOrder->update();
+
+            event(new ReceivePurchaseOrder(auth()->user(), $purchaseOrder));
+
         } catch (\Throwable $th) {
             FacadesLog::channel('dailyerror')->alert('Error : User['.auth()->user()->id.'] Encountered An Error To [Receive PurchaseOrder]', [
                 'error' => $th->getMessage()
@@ -230,6 +240,8 @@ class PurchaseOrderController extends Controller
                 $item->quantity += $value;
                 $item->save();
             }
+
+            event(new ClosePurchaseOrder(auth()->user(), $purchaseOrder));
 
         } catch (\Throwable $th) {
             FacadesLog::channel('dailyerror')->alert('Error : User['.auth()->user()->id.'] Encountered An Error To [Close PurchaseOrder]', [

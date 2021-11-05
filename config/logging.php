@@ -42,7 +42,7 @@ return [
         ],
 
         'single' => [
-            'driver' => 'errorlog',
+            'driver' => 'single',
             'path' => storage_path('logs/laravel.log'),
             'level' => env('LOG_LEVEL', 'debug'),
         ],
@@ -55,14 +55,14 @@ return [
         ],
 
         'dailyerror' => [
-            'driver' => 'errorlog',
+            'driver' => 'daily',
             'path' => storage_path('logs/daily/error/error.log'),
             'level' => env('LOG_LEVEL', 'debug'),
             'days' => 0,
         ],
 
         'dailysuspicious' => [
-            'driver' => 'errorlog',
+            'driver' => 'daily',
             'path' => storage_path('logs/daily/suspicious/suspicious.log'),
             'level' => env('LOG_LEVEL', 'debug'),
             'days' => 0,

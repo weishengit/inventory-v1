@@ -30,7 +30,7 @@ class LogApproveReleaseOrder
         Log::create([
             'user_id' => $event->approver->id,
             'type' => 'Release Order',
-            'info' => $event->approver->name . 'approved RO#' . $event->releaseOrder->ro_num
+            'info' => $event->approver->name . ' approved RO#' . $event->releaseOrder->ro_num
         ]);
     }
 }

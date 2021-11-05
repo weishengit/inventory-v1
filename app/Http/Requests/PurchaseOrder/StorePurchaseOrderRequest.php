@@ -25,7 +25,7 @@ class StorePurchaseOrderRequest extends FormRequest
     {
         return [
             'supplier_id' => ['required', 'numeric', 'exists:suppliers,id'],
-            'po_num' => ['required', 'numeric', 'max:255'],
+            'po_num' => ['required', 'numeric', 'digits_between:2,100'],
             'memo' => ['nullable', 'string', 'max:1000'],
             'items' => ['required', 'array', 'min:1'],
             'items.*' => ['required', 'numeric', 'integer']
